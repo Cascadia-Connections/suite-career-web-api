@@ -10,6 +10,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-SuiteCareers-7243f23f-4872-4079-a520-cd148192b60d")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("SuiteCareers")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
