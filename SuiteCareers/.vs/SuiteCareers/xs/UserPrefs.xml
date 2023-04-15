@@ -8,18 +8,18 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="SuiteCareers/Models/User.cs">
     <Files>
-      <File FileName="SuiteCareers/Models/User.cs" Line="20" Column="1" />
-      <File FileName="SuiteCareers/Models/UserDescription.cs" Line="4" Column="30" />
-      <File FileName="SuiteCareers/Models/Session.cs" Line="4" Column="30" />
-      <File FileName="SuiteCareers/Models/Interview.cs" Line="1" Column="1" />
-      <File FileName="SuiteCareers/Models/Question.cs" Line="16" Column="1" />
-      <File FileName="SuiteCareers/Models/ErrorViewModel.cs" Line="1" Column="1" />
-      <File FileName="SuiteCareers/Models/Response.cs" Line="16" Column="1" />
+      <File FileName="SuiteCareers/Models/User.cs" Line="23" Column="1" />
+      <File FileName="SuiteCareers/Models/UserDescription.cs" Line="26" Column="1" />
+      <File FileName="SuiteCareers/Models/Session.cs" Line="14" Column="45" />
+      <File FileName="SuiteCareers/Models/Interview.cs" Line="10" Column="45" />
+      <File FileName="SuiteCareers/Models/Question.cs" Line="10" Column="44" />
+      <File FileName="SuiteCareers/Models/ErrorViewModel.cs" Line="9" Column="1" />
+      <File FileName="SuiteCareers/Models/Response.cs" Line="11" Column="42" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="SuiteCareers" expanded="True" selected="True">
+          <Node name="SuiteCareers" expanded="True">
             <Node name="SuiteCareers" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="Data" expanded="True" />
