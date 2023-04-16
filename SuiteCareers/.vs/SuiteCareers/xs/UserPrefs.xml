@@ -1,4 +1,25 @@
 ﻿<Properties StartupConfiguration="{780F8118-9FC4-4638-8C33-6FEA6C874236}|https">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="SuiteCareers/Models/User.cs">
+    <Files>
+      <File FileName="SuiteCareers/Models/User.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SuiteCareers" expanded="True">
+            <Node name="SuiteCareers" expanded="True">
+              <Node name="Models" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.SuiteCareers FirstBuild="True" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.SuiteCareers PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>
