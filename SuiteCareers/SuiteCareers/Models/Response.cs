@@ -1,10 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Response
+namespace SuiteCareers.Models
 {
-    [Key]
-    public int responseId { get; set; }
-    public int response { get; set; }
+    public class Response
+    {
+        [Key]
+        public long responseId { get; set; }
+        public long response { get; set; }
 
-    public int questionId { get; set; }
+        public long questionId { get; set; }
+    }
 }
+
