@@ -6,7 +6,7 @@ namespace SuiteCareers.Models
     public class Session
     {
         [Key]
-        public int sessionId { get; set; }
+        public long sessionId { get; set; }
         [Required(ErrorMessage = "Please enter the date")]
         public DateTime date { get; set; }
         [Required]

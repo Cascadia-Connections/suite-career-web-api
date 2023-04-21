@@ -6,7 +6,7 @@ namespace SuiteCareers.Models
     public class Response
     {
         [Key]
-        public int responseId { get; set; }
+        public long responseId { get; set; }
         public int response { get; set; }
 
         public int questionId { get; set; }

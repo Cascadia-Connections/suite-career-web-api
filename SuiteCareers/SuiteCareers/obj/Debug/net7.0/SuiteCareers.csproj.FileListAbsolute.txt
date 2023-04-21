@@ -158,7 +158,6 @@ C:/Users/tyler/OneDrive/Desktop/BIT186/SuiteCareers/SuiteCareers/obj/Debug/net7.
 C:/Users/tyler/OneDrive/Desktop/BIT186/SuiteCareers/SuiteCareers/obj/Debug/net7.0/ref/SuiteCareers.dll
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/appsettings.Development.json
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/appsettings.json
-/Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/app.db
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/SuiteCareers.staticwebassets.runtime.json
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/SuiteCareers
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/SuiteCareers.deps.json
