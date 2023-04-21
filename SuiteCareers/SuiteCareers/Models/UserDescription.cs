@@ -15,6 +15,7 @@ namespace SuiteCareers.Models
         public string UserJob { get; set; }
         [Required(ErrorMessage = "Please enter the date")]
         public DateTime date { get; set; }
+        public long UserId { get; set; }
         //How to add foreigh key to this class?
         //[DataType(DataType.EmailAddress)]
         //public string? Email { get; set; }

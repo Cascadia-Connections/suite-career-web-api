@@ -234,3 +234,4 @@ C:/Users/tyler/OneDrive/Desktop/BIT186/SuiteCareers/SuiteCareers/obj/Debug/net7.
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/obj/Debug/net7.0/SuiteCareers.pdb
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/obj/Debug/net7.0/SuiteCareers.genruntimeconfig.cache
 /Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/obj/Debug/net7.0/ref/SuiteCareers.dll
+/Users/noahku/Desktop/SuiteCareers/suite-career-web-api/SuiteCareers/SuiteCareers/bin/Debug/net7.0/Bogus.dll
