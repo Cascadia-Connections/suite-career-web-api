@@ -5,8 +5,9 @@ namespace SuiteCareers.Models
 {
     public class User
     {
-        public long Id { get; set; }
-        [Key, DataType(DataType.EmailAddress)]
+        [Key]
+        public long UserId { get; set; }
+        [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
         [Required(ErrorMessage = "Please enter your first name")]
         public string? FirstName { get; set; }
@@ -16,5 +17,6 @@ namespace SuiteCareers.Models
         public string? City { get; set; }
         [Required(ErrorMessage = "Please Enter the state of which you live")]
         public string? State { get; set; }
+        public ICollection<Session> Sessions { get; set; }
     }
 }

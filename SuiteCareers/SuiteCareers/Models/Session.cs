@@ -11,7 +11,7 @@ namespace SuiteCareers.Models
         public DateTime Date { get; set; }
         [Required]
         public long InterviewId { get; set; }
-        public string Email { get; set; }
+        public long UserId { get; set; }
     }
 }
 

@@ -101,9 +101,9 @@ namespace SuiteCareers.Controllers
         public ActionResult DeleteUser(long id)
         {
             //Searchs for record using Any(); if missing -> return NotFound();
-            if (!_db.Users.Any(u => u.Id == id)) { return NotFound(); }
+            if (!_db.Users.Any(u => u.UserId == id)) { return NotFound(); }
             //Removes the writer with the given id
-            _db.Remove(new User { Id = id });
+            _db.Remove(new User { UserId = id });
             _db.SaveChanges();
             return Accepted();
         }
