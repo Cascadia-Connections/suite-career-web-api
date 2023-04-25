@@ -1,4 +1,6 @@
-﻿namespace SuiteCareers.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SuiteCareers.Models;
 
 public class ErrorViewModel
 {
