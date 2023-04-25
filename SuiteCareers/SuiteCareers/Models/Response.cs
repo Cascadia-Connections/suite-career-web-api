@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SuiteCareers.Models
@@ -7,9 +7,9 @@ namespace SuiteCareers.Models
     {
         [Key]
         public long responseId { get; set; }
-        public int response { get; set; }
+        public long response { get; set; }
 
-        public int questionId { get; set; }
+        public long questionId { get; set; }
     }
 }
 
