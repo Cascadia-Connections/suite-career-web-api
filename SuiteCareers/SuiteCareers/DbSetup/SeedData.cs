@@ -42,8 +42,7 @@ namespace SuiteCareers.DbSetup
                 .RuleFor(u => u.LastName, f => f.PickRandom(lastNames))
                 .RuleFor(u => u.Email, f => emails[emailIndex++])
                 .RuleFor(u => u.City, f => f.PickRandom(cities))
-                .RuleFor(u => u.State, f => f.PickRandom(states))
-                .RuleFor(u => u.Id, f => userId++);
+                .RuleFor(u => u.State, f => f.PickRandom(states));
             var users = testUsers.Generate(45); // TODO: B) create a collection of 45 users
                                                 //UserDescriptions
             var usersIndex = 0;
@@ -80,7 +79,7 @@ namespace SuiteCareers.DbSetup
 
             var testSessions = new Faker<Session>()
                 .RuleFor(s => s.InterviewId, f => f.PickRandom(interviews).InterviewId)
-                .RuleFor(s => s.Email, f => f.PickRandom(users).Email)
+                .RuleFor(s => s.UserId, f => f.PickRandom(users).UserId)
                 .RuleFor(s => s.Date, (faker, d) =>
         faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today));
             var sessions = testSessions.Generate(100);
