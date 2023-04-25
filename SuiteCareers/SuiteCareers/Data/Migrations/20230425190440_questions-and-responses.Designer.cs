@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuiteCareers.Data;
 
@@ -10,9 +11,11 @@ using SuiteCareers.Data;
 namespace SuiteCareers.Data.Migrations
 {
     [DbContext(typeof(SuiteCareersDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230425190440_questions-and-responses")]
+    partial class questionsandresponses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -21,6 +24,9 @@ namespace SuiteCareers.Data.Migrations
                 {
                     b.Property<long>("InterviewId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QuestionId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("InterviewId");
@@ -34,16 +40,11 @@ namespace SuiteCareers.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("InterviewId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("QuestionContent")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("QuestionId");
-
-                    b.HasIndex("InterviewId");
 
                     b.ToTable("Questions");
                 });
@@ -143,22 +144,6 @@ namespace SuiteCareers.Data.Migrations
                     b.HasKey("DescriptionId");
 
                     b.ToTable("UserDescriptions");
-                });
-
-            modelBuilder.Entity("SuiteCareers.Models.Question", b =>
-                {
-                    b.HasOne("SuiteCareers.Models.Interview", "Interview")
-                        .WithMany("Questions")
-                        .HasForeignKey("InterviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Interview");
-                });
-
-            modelBuilder.Entity("SuiteCareers.Models.Interview", b =>
-                {
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

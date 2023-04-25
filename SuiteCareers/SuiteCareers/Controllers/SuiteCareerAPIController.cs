@@ -112,9 +112,9 @@ namespace SuiteCareers.Controllers
         public ActionResult DeleteInterview(long id)
         {
             //Searchs for record using Any(); if missing -> return NotFound();
-            if (!_db.Interviews.Any(i => i.interviewId == id)) { return NotFound(); }
+            if (!_db.Interviews.Any(i => i.InterviewId == id)) { return NotFound(); }
             //Removes the writer with the given id
-            _db.Remove(new Interview { interviewId = id });
+            _db.Remove(new Interview { InterviewId = id });
             _db.SaveChanges();
             return Accepted();
         }
@@ -123,9 +123,9 @@ namespace SuiteCareers.Controllers
         public ActionResult DeleteQuestion(long id)
         {
             //Searchs for record using Any(); if missing -> return NotFound();
-            if (!_db.Questions.Any(q => q.questionId == id)) { return NotFound(); }
+            if (!_db.Questions.Any(q => q.QuestionId == id)) { return NotFound(); }
             //Removes the writer with the given id
-            _db.Remove(new Question { questionId = id });
+            _db.Remove(new Question { QuestionId = id });
             _db.SaveChanges();
             return Accepted();
         }
@@ -145,9 +145,9 @@ namespace SuiteCareers.Controllers
         public ActionResult DeleteResponse(long id)
         {
             //Searchs for record using Any(); if missing -> return NotFound();
-            if (!_db.Responses.Any(r => r.responseId == id)) { return NotFound(); }
+            if (!_db.Responses.Any(r => r.ResponseId == id)) { return NotFound(); }
             //Removes the writer with the given id
-            _db.Remove(new Response { responseId = id });
+            _db.Remove(new Response { ResponseId = id });
             _db.SaveChanges();
             return Accepted();
         }
