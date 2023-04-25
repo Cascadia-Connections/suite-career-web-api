@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-namespace SuiteCareers.Models
+using SuiteCareers.Models;
+namespace SuiteCareers.Data
+
 {
 	public class SuiteCareersDbContext:DbContext
 	{
