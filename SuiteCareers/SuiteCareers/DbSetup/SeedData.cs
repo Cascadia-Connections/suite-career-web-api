@@ -78,12 +78,13 @@ namespace SuiteCareers.DbSetup
                 .RuleFor(r => r.QuestionId, f => f.Random.Int(1, 100));
             var allResponses = testResponses.Generate(200);
 
-            var sessions = new Faker<Session>()
+            var testSessions = new Faker<Session>()
                 .RuleFor(s => s.InterviewId, f => f.PickRandom(interviews).InterviewId)
                 .RuleFor(s => s.Email, f => f.PickRandom(users).Email)
                 .RuleFor(s => s.Date, (faker, d) =>
         faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today));
-            
+            var sessions = testSessions.Generate(100);
+
             dbContext.Users.AddRange(users);
             dbContext.UserDescriptions.AddRange(userDescriptions);
             dbContext.Interviews.AddRange(interviews);
