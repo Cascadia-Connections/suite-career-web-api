@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SuiteCareers.Models
@@ -10,7 +10,8 @@ namespace SuiteCareers.Models
 
 
         [Required]
-        public int questionId { get; set; }
+        public long questionId { get; set; }
+
 
     }
 }
