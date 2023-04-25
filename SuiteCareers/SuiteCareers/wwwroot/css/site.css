@@ -20,3 +20,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Index/Dashboad View */
+
+.snapshot-placeholder {
+    height: 180px;
+}
+
+#recent-sessions {
+    height: 400px;
+}
+
+#top-questions {
+    height: 485px;
+}
