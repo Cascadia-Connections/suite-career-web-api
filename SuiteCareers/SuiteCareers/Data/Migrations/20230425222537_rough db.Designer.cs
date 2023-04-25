@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuiteCareers.Data;
 
@@ -10,9 +11,11 @@ using SuiteCareers.Data;
 namespace SuiteCareers.Data.Migrations
 {
     [DbContext(typeof(SuiteCareersDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230425222537_rough db")]
+    partial class roughdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -160,13 +163,11 @@ namespace SuiteCareers.Data.Migrations
 
             modelBuilder.Entity("SuiteCareers.Models.Session", b =>
                 {
-                    b.HasOne("SuiteCareers.Models.User", "User")
+                    b.HasOne("SuiteCareers.Models.User", null)
                         .WithMany("Sessions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SuiteCareers.Models.Interview", b =>
