@@ -2,20 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuiteCareers.Data;
 
 #nullable disable
 
-namespace SuiteCareers.Data.Migrations
+namespace SuiteCareers.Migrations
 {
     [DbContext(typeof(SuiteCareersDbContext))]
-    [Migration("20230425215907_seed-data")]
-    partial class seeddata
+    partial class SuiteCareersDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.3");
@@ -25,6 +22,10 @@ namespace SuiteCareers.Data.Migrations
                     b.Property<long>("InterviewId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("InterviewName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("InterviewId");
 
@@ -78,33 +79,37 @@ namespace SuiteCareers.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<long>("InterviewId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("SessionId");
+
+                    b.HasIndex("InterviewId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("SuiteCareers.Models.User", b =>
                 {
-                    b.Property<string>("Email")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<long>("Id")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -114,7 +119,7 @@ namespace SuiteCareers.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Email");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
@@ -145,6 +150,9 @@ namespace SuiteCareers.Data.Migrations
 
                     b.HasKey("DescriptionId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("UserDescriptions");
                 });
 
@@ -159,9 +167,47 @@ namespace SuiteCareers.Data.Migrations
                     b.Navigation("Interview");
                 });
 
+            modelBuilder.Entity("SuiteCareers.Models.Session", b =>
+                {
+                    b.HasOne("SuiteCareers.Models.Interview", "Interview")
+                        .WithMany()
+                        .HasForeignKey("InterviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SuiteCareers.Models.User", "User")
+                        .WithMany("Sessions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Interview");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SuiteCareers.Models.UserDescription", b =>
+                {
+                    b.HasOne("SuiteCareers.Models.User", "User")
+                        .WithOne("UserDescription")
+                        .HasForeignKey("SuiteCareers.Models.UserDescription", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SuiteCareers.Models.Interview", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("SuiteCareers.Models.User", b =>
+                {
+                    b.Navigation("Sessions");
+
+                    b.Navigation("UserDescription")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

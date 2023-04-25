@@ -16,6 +16,7 @@ namespace SuiteCareers.Models
         [Required(ErrorMessage = "Please enter the date")]
         public DateTime Date { get; set; }
         public long UserId { get; set; }
+        public User User { get; set; }
 
 
     }

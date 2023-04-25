@@ -17,6 +17,7 @@ namespace SuiteCareers.Models
         public string? City { get; set; }
         [Required(ErrorMessage = "Please Enter the state of which you live")]
         public string? State { get; set; }
+        public UserDescription UserDescription { get; set; }
         public ICollection<Session> Sessions { get; set; }
     }
 }

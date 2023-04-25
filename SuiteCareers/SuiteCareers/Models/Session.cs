@@ -10,7 +10,7 @@ namespace SuiteCareers.Models
         [Required(ErrorMessage = "Please enter the date")]
         public DateTime Date { get; set; }
         [Required]
-        public long InterviewId { get; set; }
+        public Interview Interview { get; set; }
         public User User { get; set; }
     }
 }
