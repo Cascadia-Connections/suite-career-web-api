@@ -134,9 +134,9 @@ namespace SuiteCareers.Controllers
         public ActionResult DeleteSession(long id)
         {
             //Searchs for record using Any(); if missing -> return NotFound();
-            if (!_db.Sessions.Any(s => s.sessionId == id)) { return NotFound(); }
+            if (!_db.Sessions.Any(s => s.SessionId == id)) { return NotFound(); }
             //Removes the writer with the given id
-            _db.Remove(new Session { sessionId = id });
+            _db.Remove(new Session { SessionId = id });
             _db.SaveChanges();
             return Accepted();
         }
