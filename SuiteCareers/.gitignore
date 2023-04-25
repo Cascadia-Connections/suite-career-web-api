@@ -5,6 +5,7 @@
 
 # Mac dev artifacts
 .DS_Store
+*Migrations/
 *.db
 # User-specific files
 *.rsuser
