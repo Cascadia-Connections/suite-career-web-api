@@ -20,3 +20,58 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*----------Snapshot Bar Styles----------*/
+
+/*Styles for the entire bar*/
+#snapshot-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DFECF0;
+    width: 1147px;
+    height: 267px;
+    border-radius: 15px;
+    border: 1px solid #000000;
+    position: relative;
+}
+
+/*Styles for everything that is part of the custom-date-range*/
+.custom-date-range {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+
+    .custom-date-range span {
+        font-size: 24px;
+    }
+
+/*Styles for the white squares*/
+.square {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: calc(100% / 6); /*Centers the 6 squares evenly horizontally*/
+    background-color: #FFFFFF;
+    width: 172px;
+    height: 142px;
+    border: 1px solid #000000;
+    border-radius: 15px; /*Rounded edges*/
+    margin: 0 10px; /*Margin of 0 on top/bottom. Margin of 10px left/right*/
+}
+
+    /*Styles for the top text in white squares*/
+    .square .top-text {
+        margin-top: 5px;
+        align-items: flex-start; /*Places content at top of parent element*/
+    }
+
+    /*Styles for the bottom text in white squares*/
+    .square .bottom-text {
+        align-content: center;
+        margin-top: 40px;
+        font-size: larger;
+    }
+
+/*----------End Snapshot Bar Styles----------*/
