@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SuiteCareers.Models
 {
+
     public class User
     {
         [Key]
@@ -20,4 +21,12 @@ namespace SuiteCareers.Models
         public UserDescription UserDescription { get; set; }
         public ICollection<Session> Sessions { get; set; }
     }
+
 }
+     
+
+        
+
+ 
+
+           
