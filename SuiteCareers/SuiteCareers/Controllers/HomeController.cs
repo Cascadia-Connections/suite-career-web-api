@@ -1,15 +1,19 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SuiteCareers.Models;
+using SuiteCareers.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SuiteCareers.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private SuiteCareersDbContext _db;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, SuiteCareersDbContext db)
     {
+        _db = db;
         _logger = logger;
     }
 
