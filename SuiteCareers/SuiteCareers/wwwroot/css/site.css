@@ -74,4 +74,40 @@ body {
         font-size: larger;
     }
 
+/*Adding responsiveness*/
+@media (max-width: 768px) { /*For smaller screens*/
+    #snapshot-bar {
+        height: 200px;
+    }
+
+    .square {
+        width: calc(100% / 6); /*Centers 6 squares evenly horizontally*/
+        height: 100px;
+        margin: 0 5px; /*Margin of 0 on top/bottom. Margin of 5px left/right*/
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) { /*For medium-sized screens*/
+    #snapshot-bar {
+        height: 233px;
+    }
+
+    .square {
+        width: calc(100% / 6); /*Centers 6 squares evenly horizontally*/
+        height: 120px;
+        margin: 0 5px; /*Margin of 0 on top/bottom. Margin of 5px left/right*/
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) { /*For larger screens*/
+    #snapshot-bar {
+        height: 250px;
+    }
+
+    .square {
+        width: calc(100% / 6); /*Centers 6 squares evenly horizontally*/
+        height: 130px;
+        margin: 0 5px; /*Margin of 0 on top/bottom. Margin of 5px left/right*/
+    }
+}
 /*----------End Snapshot Bar Styles----------*/
