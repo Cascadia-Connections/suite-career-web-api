@@ -6,14 +6,12 @@ namespace SuiteCareers.Models
     public class Session
     {
         [Key]
-        public long sessionId { get; set; }
+        public long SessionId { get; set; }
         [Required(ErrorMessage = "Please enter the date")]
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
         [Required]
-        public long interviewId { get; set; }
-
-        public string email { get; set; }
-
+        public Interview Interview { get; set; }
+        public User User { get; set; }
 
     }
 }
