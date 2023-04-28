@@ -6,12 +6,10 @@ namespace SuiteCareers.Models
     public class Interview
     {
         [Key]
-        public long interviewId { get; set; }
-
-
+        public long InterviewId { get; set; }
+        public string InterviewName { get; set; }
         [Required]
-        public long questionId { get; set; }
-
+        public ICollection<Question> Questions { get; set; }
 
     }
 }

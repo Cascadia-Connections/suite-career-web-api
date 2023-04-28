@@ -6,12 +6,12 @@ namespace SuiteCareers.Models
     public class Response
     {
         [Key]
-        public long responseId { get; set; }
 
-        public long response { get; set; }
+        public long ResponseId { get; set; }
+        public string UserResponse { get; set; }
 
+        public int QuestionId { get; set; }
 
-        public long questionId { get; set; }
     }
 }
 
