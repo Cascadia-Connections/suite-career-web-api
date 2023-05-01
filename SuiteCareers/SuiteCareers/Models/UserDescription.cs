@@ -7,13 +7,13 @@ namespace SuiteCareers.Models
     {
         [Key]
         public long DescriptionId { get; set; }
-        [Required(ErrorMessage = "Please enter your educational level")]
+        [Required]
         public string EducationLevel { get; set; }
-        [Required(ErrorMessage = "Please enter your work experience")]
+        [Required]
         public string WorkExperience { get; set; }
-        [Required(ErrorMessage = "Please enter your job description")]
+        [Required]
         public string UserJob { get; set; }
-        [Required(ErrorMessage = "Please enter the date")]
+        [Required]
         public DateTime Date { get; set; }
         public long UserId { get; set; }
         public User User { get; set; }
