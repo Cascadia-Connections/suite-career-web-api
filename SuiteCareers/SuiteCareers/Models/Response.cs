@@ -7,11 +7,8 @@ namespace SuiteCareers.Models
     {
         [Key]
         public long responseId { get; set; }
-
         public long response { get; set; }
 
-
-        public long questionId { get; set; }
     }
 }
 
