@@ -18,5 +18,35 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #fbfcfe;
 }
+
+/* Index/Dashboad View */
+
+.snapshot-placeholder {
+    height: 180px;
+}
+
+#recent-sessions {
+    height: 400px;
+}
+
+#top-questions {
+    height: 485px;
+}
+#top-questions td:nth-child(2) {
+    font-weight: bold;  
+}
+
+.card {
+    border-radius: 0.45rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.09);
+}
+
+@media (max-width: 576px) {
+    #active-info > div:nth-child(1) {
+        margin-bottom: 1rem
+    }
+}
+       
