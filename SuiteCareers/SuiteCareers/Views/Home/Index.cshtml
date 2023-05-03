@@ -5,11 +5,72 @@
 
 <div style="height: 100%">
 
-    <!-- Snapshot Placeholder -->
-    <div class="snapshot-placeholder card my-3">
-        <div class="card-body">
+    <!-- Snapshot Placeholder -->  
+    <div id="snapshot-bar" class="card bg-light rounded p-3">
+        <div class="row mb-3">
+            <div class="col-auto">
+                <span>Filter by Date:</span>
+            </div>
+            <div class="col-auto">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">From Date</span>
+                    </div>
+                    <input type="date" class="form-control" id="from-date" name="from-date">
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">To Date</span>
+                    </div>
+                    <input type="date" class="form-control" id="to-date" name="to-date">
+                </div>
+            </div>
+            <div class="col-auto">
+                <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3">
+                    <div class="top-text">Top Text 1</div>
+                    <div class="bottom-text">Bottom Text 1</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3">
+                    <div class="top-text">Top Text 2</div>
+                    <div class="bottom-text">Bottom Text 2</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3">
+                    <div class="top-text">Top Text 3</div>
+                    <div class="bottom-text">Bottom Text 3</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3">
+                    <div class="top-text">Top Text 4</div>
+                    <div class="bottom-text">Bottom Text 4</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3">
+                    <div class="top-text">Top Text 5</div>
+                    <div class="bottom-text">Bottom Text 5</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3">
+                    <div class="top-text">Top Text 6</div>
+                    <div class="bottom-text">Bottom Text 6</div>
+                </div>
+            </div>
         </div>
     </div>
+
 
     <div class="row content-lower-half my-3">
         <div class="col-md-6 lower-half-content-left-side">
@@ -127,57 +188,9 @@
 
         </div>
     </div>
-</div>
-
-<div class="container">                                     <!--The container for the whole dang thing-->
-   <div id="snapshot-bar" class="row justify-content-center align-items-center">
-    <div class="custom-date-range">                         <!--Container for the date search fields-->
-        </div>
-        <span>Filter by Date:</span>
-        <label for="from-date"></label>                     <!--What will be populated in the from-date field initially-->
-        <input type="date" id="from-date" name="from-date"> <!--Input field for "From Date"-->
-        <span>to</span>
-        <label for="to-date"></label>                       <!--What will be populated in the to-date field initially-->
-        <input type="date" id="to-date" name="to-date">     <!--input field for "To Date"-->
-        <button id="filter" type="submit">Filter</button>
 
 
-    </div>
 
-    <!-- Square 1-->
-    <div class="square col-md-2 col-4">                     <!--The container for each white square-->
-        <div class="top-text">Top Text 1</div>              <!--The top text in this white square-->
-        <div class="bottom-text">Bottom Text 1</div>        <!--The bottom text in this white square-->
-    </div>
-
-    <!--Square 2-->
-    <div class="square col-md-2 col-4">
-        <div class="top-text">Top Text 2</div>
-        <div class="bottom-text">Bottom Text 2</div>
-    </div>
-
-    <!-- Square 3-->
-    <div class="square col-md-2 col-4">
-        <div class="top-text">Top Text 3</div>
-        <div class="bottom-text">Bottom Text 3</div>
-    </div>
-
-    <!--Square 4-->
-    <div class="square col-md-2 col-4">
-        <div class="top-text">Top Text 4</div>
-        <div class="bottom-text">Bottom Text 4</div>
-    </div>
-
-    <!--Square 5-->
-    <div class="square col-md-2 col-4">
-        <div class="top-text">Top Text 5</div>
-        <div class="bottom-text">Bottom Text 5</div>
-    </div>
-
-    <!--Square 6-->
-    <div class="square col-md-2 col-4">
-        <div class="top-text">Top Text 6</div>
-        <div class="bottom-text">Bottom Text 6</div>
-    </div>
+    
 
 </div>
