@@ -33,9 +33,7 @@ body {
 }
 
 /*----------Snapshot Bar Styles----------*/
-#snapshot-bar {
-    background-color: a0d5e5;
-}
+
 /*----------End Snapshot Bar Styles----------*/
 #top-questions td:nth-child(2) {
     font-weight: bold;
