@@ -18,8 +18,9 @@ namespace SuiteCareers.Models
         public string? City { get; set; }
         [Required]
         public string? State { get; set; }
-        public UserDescription UserDescription { get; set; }
-        public ICollection<Session> Sessions { get; set; }
+        public UserDescription? UserDescription { get; set; }
+        public ICollection<Session>? Sessions { get; set; }
+
     }
 
 }

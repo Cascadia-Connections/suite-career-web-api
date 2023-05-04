@@ -10,6 +10,10 @@ var connectionString = builder.Configuration.GetConnectionString("SuiteCareers-M
 builder.Services.AddDbContext<SuiteCareersDbContext>(options =>
     options.UseSqlite(connectionString));
 
+//var connectionString = builder.Configuration.GetConnectionString("SuiteCareers-Win-SqlServer") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+//builder.Services.AddDbContext<SuiteCareersDbContext>(options =>
+//    options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

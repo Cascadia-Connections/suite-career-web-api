@@ -201,7 +201,7 @@ namespace SuiteCareers.Controllers
         public ActionResult PutUser(long id, [FromBody] User user)
         {
             //Test for invalid Model
-            if (!ModelState.IsValid) { return BadRequest(); }
+            //if (!ModelState.IsValid) { return BadRequest(); }
 
             //Tests for missing record (bad ID value)
             if (!_db.Users.Any(u => u.UserId == id)) { return NotFound(); }
