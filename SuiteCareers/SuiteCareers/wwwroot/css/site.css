@@ -24,10 +24,6 @@ body {
 
 /* Index/Dashboad View */
 
-.snapshot-placeholder {
-    height: 180px;
-}
-
 #recent-sessions {
     height: 400px;
 }
@@ -35,8 +31,12 @@ body {
 #top-questions {
     height: 485px;
 }
+
+/*----------Snapshot Bar Styles----------*/
+
+/*----------End Snapshot Bar Styles----------*/
 #top-questions td:nth-child(2) {
-    font-weight: bold;  
+    font-weight: bold;
 }
 
 .card {
@@ -49,4 +49,6 @@ body {
         margin-bottom: 1rem
     }
 }
-       
+
+
+
