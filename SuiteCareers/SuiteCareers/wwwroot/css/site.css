@@ -32,9 +32,6 @@ body {
     height: 485px;
 }
 
-/*----------Snapshot Bar Styles----------*/
-
-/*----------End Snapshot Bar Styles----------*/
 #top-questions td:nth-child(2) {
     font-weight: bold;
 }
@@ -48,6 +45,12 @@ body {
     #active-info > div:nth-child(1) {
         margin-bottom: 1rem
     }
+}
+
+/* Sessions View */
+
+#searchInput {
+    height: 2.2rem;
 }
 
 

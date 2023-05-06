@@ -1,30 +1,59 @@
 ﻿@{
-    ViewData["Title"] = "Interview Analytics";
+    ViewData["Title"] = "Sessions";
 }
 
 <div style="height: 100%">
-
-    <!-- Snapshot Placeholder -->
-    <div class="snapshot-placeholder card my-3">
-        <div class="card-body">
-        </div>
-    </div>
-
-    <div class="row content-lower-half my-3">
+    <div class="row my-3">
         <div class="col-xl-12">
-            <div class="card overflow-auto">
+            <div class="card overflow-auto mh-100">
                 <div class="card-body p-4 d-flex flex-column">
-                    <div class="d-flex justify-content-between pe-4">
-                        <p class="fw-bold fs-5">All Sessions</p>
-                        <input type="text" placeholder="Search..." />
+
+                    <div class="row justify-content-between">
+                        <div class="col-sm-6 mb-sm-2">
+                            <div class="row h-100 ">
+                                <div class="col-lg-6 align-self-center">
+                                    <p class="fw-bold fs-5 mb-0">All Sessions</p>
+                                </div>
+                                <div class="col-lg-6 align-self-center py-1">
+                                    <input type="text" id="searchInput" placeholder="Search..." />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-lg-5 py-1">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">From</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="from-date" name="from-date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 py-1">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">To</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="to-date" name="to-date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 py-1 d-sm-flex justify-content-end">
+                                    <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-fill d-flex">
+                    
+                    <div class="row flex-fill d-flex">
                         <table class="table table-hover flex-fill mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">User</th>
                                     <th scope="col">Interview ID</th>
-                                    <th scope="col">Completed</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Time</th>
                                     <th scope="col">Duration</th>
                                 </tr>
                             </thead>
@@ -33,34 +62,38 @@
                                 <tr>
                                     <td scope="row">Fergy Thomas</td>
                                     <td scope="row">00005</td>
-                                    <td>05/29/2023 09:45 AM</td>
-                                    <td>10m 23s</td>
+                                    <td scope="row" class="date-cell">05/29/2023</td>
+                                    <td scope="row">09:45 AM</td>
+                                    <td scope="row">10m 23s</td>
                                 </tr>
                                 <tr>
-                                <td scope="row">Samantha Patel</td>
-                                <td scope="row">00004</td>
-                                <td>05/29/2023 09:34 AM</td>
-                                <td>15m 35s</td>
+                                    <td scope="row">Samantha Patel</td>
+                                    <td scope="row">00004</td>
+                                    <td scope="row" class="date-cell">05/29/2023</td>
+                                    <td scope="row">09:34 AM</td>
+                                    <td scope="row">15m 35s</td>
                                 </tr>
                                 <tr>
-                                <td scope="row">Olivia Miller</td>
-                                <td scope="row">00003</td>
-                                <td>05/29/2023 09:18 AM</td>
-                                <td>19m 10s</td>
+                                    <td scope="row">Olivia Miller</td>
+                                    <td scope="row">00003</td>
+                                    <td scope="row" class="date-cell">05/29/2023</td>
+                                    <td scope="row">09:18 AM</td>
+                                    <td scope="row">19m 10s</td>
                                 </tr>
                                 <tr>
-                                <td scope="row">Ethan Kim</td>
-                                <td scope="row">00002</td>
-                                <td>05/29/2023 09:12 AM</td>
-                                <td>23m 42s</td>
+                                    <td scope="row">Ethan Kim</td>
+                                    <td scope="row">00002</td>
+                                    <td scope="row" class="date-cell">05/29/2023</td>
+                                    <td scope="row">09:12 AM</td>
+                                    <td scope="row">23m 42s</td>
                                 </tr>
                                 <tr>
-                                <td scope="row">Alexander Lee</td>
-                                <td scope="row">00001</td>
-                                <td>05/29/2023 09:09 AM</td>
-                                <td>9m 28s</td>
+                                    <td scope="row">Alexander Lee</td>
+                                    <td scope="row">00001</td>
+                                    <td scope="row" class="date-cell">05/29/2023</td>
+                                    <td scope="row">09:09 AM</td>
+                                    <td scope="row">9m 28s</td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -69,3 +102,54 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        //Search Bar
+        $(document).ready(function() {
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        //Date Filtering
+        // Get table rows and date filter elements
+        const tableRows = document.querySelectorAll('table tbody tr');
+        const fromDateInput = document.getElementById('from-date');
+        const toDateInput = document.getElementById('to-date');
+        const filterButton = document.getElementById('filter');
+
+        // Add event listener to filter button
+        filterButton.addEventListener('click', () => {
+            // Get dates from input values
+            const fromDate = new Date(fromDateInput.value);
+            fromDate.setUTCHours(fromDate.getUTCHours() + 7);
+            const toDate = new Date(toDateInput.value);
+            toDate.setUTCHours(toDate.getUTCHours() + 7);
+
+            // Loop through each row in the table
+            for (let i = 0; i < tableRows.length; i++) {
+                // Get the date cell for the row
+                const dateCell = tableRows[i].querySelector('.date-cell');
+
+                // Check if the row has a date cell
+                if (dateCell) {
+                    // Get the date value from the cell
+                    const dateValue = new Date(dateCell.textContent);
+                    console.log(dateValue);
+
+                    // Hide or show the row based on the date range
+                    if (dateValue >= fromDate && dateValue <= toDate) {
+                        tableRows[i].classList.remove('d-none');
+                    } else {
+                        tableRows[i].classList.add('d-none');
+                    }
+                }
+            }
+        });
+    </script>
+    
+}
