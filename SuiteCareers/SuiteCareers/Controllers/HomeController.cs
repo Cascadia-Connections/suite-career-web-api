@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using SuiteCareers.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using SuiteCareers.Data;
-using Microsoft.EntityFrameworkCore;
+using SuiteCareers.Models;
+using System.Diagnostics;
 
 namespace SuiteCareers.Controllers;
 
@@ -32,7 +31,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult InterviewAnalytics()
+    public IActionResult Sessions()
     {
         return View();
     }
