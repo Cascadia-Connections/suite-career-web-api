@@ -9,9 +9,8 @@ namespace SuiteCareers.Models
         public long SessionId { get; set; }
         [Required]
         public DateTime Date { get; set; }
-        [Required]
-        public Interview Interview { get; set; }
-        public User User { get; set; }
+        public Interview? Interview { get; set; }
+        public User? User { get; set; }
 
     }
 }

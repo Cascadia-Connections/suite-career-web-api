@@ -9,7 +9,7 @@ namespace SuiteCareers.Models
         public long QuestionId { get; set; }
         [Required]
         public string? QuestionContent { get; set; }
-        public Interview Interview { get; set; }
+        public Interview? Interview { get; set; }
     }
 }
 
