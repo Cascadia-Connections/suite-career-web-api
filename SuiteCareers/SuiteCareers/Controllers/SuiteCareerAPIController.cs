@@ -244,22 +244,6 @@ namespace SuiteCareers.Controllers
             return Accepted(tempUser);
         }
 
-
-        [HttpPut("userdescription/{id}")]
-        public ActionResult PutUserDescription(long id, [FromBody] UserDescription userDescription)
-        {
-            //Test for invalid Model
-            if (!ModelState.IsValid) { return BadRequest(); }
-
-            //Tests for missing record (bad ID value)
-            if (!_db.UserDescriptions.Any(u => u.DescriptionId == id)) { return NotFound(); }
-            //Makes changes to DbContext, save to Database -> return Accepted(writer);
-            userDescription.DescriptionId = id;
-            _db.Update(userDescription);
-            _db.SaveChanges();
-            return Accepted(userDescription);
-        }
-
         [HttpPut("interview/{id}")]
         public ActionResult PutInterview(long id, [FromBody] Interview interview)
         {
