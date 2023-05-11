@@ -22,6 +22,11 @@ body {
     background-color: #fbfcfe;
 }
 
+
+.top-nav {
+    background-color: #E7F0F4;
+}
+
 /* Index/Dashboad View */
 
 #recent-sessions {
@@ -49,6 +54,3 @@ body {
         margin-bottom: 1rem
     }
 }
-
-
-
