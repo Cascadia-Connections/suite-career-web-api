@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<SuiteCareers.Models.Session>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "Sessions";
 }
 
@@ -47,7 +49,7 @@
                     </div>
                     
                     <div class="row flex-fill d-flex">
-                        <table class="table table-hover flex-fill mb-0">
+                        <table id="allSessions"class="table table-hover flex-fill mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">User</th>
@@ -58,8 +60,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                <tr>
+                                @foreach (var session in Model)
+                                {
+                                    <tr>
+                                        <td scope="row">
+                                            @session.User
+                                        </td>
+                                        <td scope="row">
+                                            @session.SessionId
+                                        </td>
+                                        <td scope="row">
+                                            @session.Date
+                                        </td>
+                                        <td>
+                                            none
+                                        </td>
+                                    </tr>
+                                }
+                                @*<tr>
                                     <td scope="row">Fergy Thomas</td>
                                     <td scope="row">00005</td>
                                     <td scope="row" class="date-cell">05/29/2023</td>
@@ -93,7 +111,7 @@
                                     <td scope="row" class="date-cell">05/29/2023</td>
                                     <td scope="row">09:09 AM</td>
                                     <td scope="row">9m 28s</td>
-                                </tr>
+                                </tr>*@
                             </tbody>
                         </table>
                     </div>
