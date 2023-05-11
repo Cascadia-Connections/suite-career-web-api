@@ -22,11 +22,12 @@ body {
     background-color: #fbfcfe;
 }
 
-/* Index/Dashboad View */
 
-.snapshot-placeholder {
-    height: 180px;
+.top-nav {
+    background-color: #E7F0F4;
 }
+
+/* Index/Dashboad View */
 
 #recent-sessions {
     height: 400px;
@@ -35,8 +36,12 @@ body {
 #top-questions {
     height: 485px;
 }
+
+/*----------Snapshot Bar Styles----------*/
+
+/*----------End Snapshot Bar Styles----------*/
 #top-questions td:nth-child(2) {
-    font-weight: bold;  
+    font-weight: bold;
 }
 
 .card {
