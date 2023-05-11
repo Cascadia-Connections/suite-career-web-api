@@ -2,6 +2,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Sessions";
+    Layout = "_Layout";
 }
 
 <div style="height: 100%">
@@ -53,7 +54,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">User</th>
-                                    <th scope="col">Interview ID</th>
+                                    <th scope="col">Session ID</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Time</th>
                                     <th scope="col">Duration</th>
@@ -64,54 +65,22 @@
                                 {
                                     <tr>
                                         <td scope="row">
-                                            @session.User
+                                            @session.User.FirstName @session.User.LastName
                                         </td>
                                         <td scope="row">
                                             @session.SessionId
                                         </td>
                                         <td scope="row">
-                                            @session.Date
+                                            @session.Date.ToString("MMMM d yyyy")
                                         </td>
-                                        <td>
-                                            none
+                                        <td scope="row">
+                                            @session.Date.ToString("h:mm tt")
+                                        </td>
+                                        <td scope="row">
+                                            N/A
                                         </td>
                                     </tr>
                                 }
-                                @*<tr>
-                                    <td scope="row">Fergy Thomas</td>
-                                    <td scope="row">00005</td>
-                                    <td scope="row" class="date-cell">05/29/2023</td>
-                                    <td scope="row">09:45 AM</td>
-                                    <td scope="row">10m 23s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Samantha Patel</td>
-                                    <td scope="row">00004</td>
-                                    <td scope="row" class="date-cell">05/29/2023</td>
-                                    <td scope="row">09:34 AM</td>
-                                    <td scope="row">15m 35s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Olivia Miller</td>
-                                    <td scope="row">00003</td>
-                                    <td scope="row" class="date-cell">05/29/2023</td>
-                                    <td scope="row">09:18 AM</td>
-                                    <td scope="row">19m 10s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Ethan Kim</td>
-                                    <td scope="row">00002</td>
-                                    <td scope="row" class="date-cell">05/29/2023</td>
-                                    <td scope="row">09:12 AM</td>
-                                    <td scope="row">23m 42s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Alexander Lee</td>
-                                    <td scope="row">00001</td>
-                                    <td scope="row" class="date-cell">05/29/2023</td>
-                                    <td scope="row">09:09 AM</td>
-                                    <td scope="row">9m 28s</td>
-                                </tr>*@
                             </tbody>
                         </table>
                     </div>
