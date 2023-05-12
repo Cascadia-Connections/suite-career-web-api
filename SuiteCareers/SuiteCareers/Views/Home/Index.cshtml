@@ -3,6 +3,8 @@
     Layout = "_Layout";
 }
 
+@model DashboardVM
+
 <div style="height: 100%">
 
     <!-- Snapshot Bar -->  
@@ -16,7 +18,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">From Date</span>
                     </div>
-                    <input type="date" class="form-control" id="from-date" name="from-date" asp-for="FromDate">
+                    <input type="date" class="form-control" id="from-date" name="from-date" @*asp-for="FromDate"*@>
                 </div>
             </div>
             <div class="col-auto">
@@ -24,7 +26,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">To Date</span>
                     </div>
-                    <input type="date" class="form-control" id="to-date" name="to-date" asp-for="ToDate">
+                    <input type="date" class="form-control" id="to-date" name="to-date" @*asp-for="ToDate"*@>
                 </div>
             </div>
             <div class="col-auto">
@@ -77,7 +79,7 @@
 
         </div>
     </div>
-
+    <!--------------------------------------->
 
     <div class="row content-lower-half my-3">
         <div class="col-md-6 lower-half-content-left-side">
