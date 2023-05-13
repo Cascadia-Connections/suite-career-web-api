@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SuiteCareers.Data;
-using SuiteCareers.Models;
-using System.Diagnostics;
-
-
-namespace SuiteCareers.Controllers
+﻿namespace SuiteCareers.Controllers
 {
 
     public class HomeController : Controller
@@ -24,7 +17,7 @@ namespace SuiteCareers.Controllers
             return View();
         }
 
-        public IActionResult UserAnalytics()
+        public IActionResult Questions()
         {
             return View();
         }
@@ -34,6 +27,10 @@ namespace SuiteCareers.Controllers
             return View();
         }
 
+        public IActionResult Users()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult Sessions()
         {
