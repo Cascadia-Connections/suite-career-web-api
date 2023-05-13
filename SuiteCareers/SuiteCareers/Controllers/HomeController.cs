@@ -1,4 +1,10 @@
-﻿namespace SuiteCareers.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SuiteCareers.Data;
+using SuiteCareers.Models;
+using System.Diagnostics;
+
+namespace SuiteCareers.Controllers
 {
 
     public class HomeController : Controller
