@@ -19,7 +19,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var dashboardVM = new DashboardVM
+        {
+            NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count()
+        };
+        return View(dashboardVM);
     }
 
     public IActionResult UserAnalytics()
@@ -47,5 +51,6 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
 }
 
