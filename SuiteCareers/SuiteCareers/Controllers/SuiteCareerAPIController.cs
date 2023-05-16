@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Buffers;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,6 +28,7 @@ namespace SuiteCareers.Controllers
         [HttpGet("users")]
         public IActionResult GetUsers()
         {
+
             return Ok(_db.Users);
         }
 
@@ -202,159 +204,210 @@ namespace SuiteCareers.Controllers
         }
 
 
+        //[HttpPut("user/{id}")]
+        //public ActionResult PutUser(long id, [FromBody] User user)
+        //{
+        //    // Tests for missing record (bad ID value)
+        //    if (!_db.Users.Any(u => u.UserId == id))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Retrieve the user from the database
+        //    User tempUser = _db.Users.Single(u => u.UserId == id);
+
+        //    // Update the user properties with the values from the request body, if present
+        //    if (user.FirstName != null)
+        //    {
+        //        tempUser.FirstName = user.FirstName;
+        //    }
+        //    if (user.LastName != null)
+        //    {
+        //        tempUser.LastName = user.LastName;
+        //    }
+        //    if (user.Email != null)
+        //    {
+        //        tempUser.Email = user.Email;
+        //    }
+        //    if (user.City != null)
+        //    {
+        //        tempUser.City = user.City;
+        //    }
+        //    if (user.State != null)
+        //    {
+        //        tempUser.State = user.State;
+        //    }
+
+        //    _db.Update(tempUser);
+        //    // Save the changes to the database
+        //    _db.SaveChanges();
+
+        //    // Return the updated user
+        //    return Accepted(tempUser);
+        //}
+
+        //[HttpPut("interview/{id}")]
+        //public ActionResult PutInterview(long id, [FromBody] Interview interview)
+        //{
+        //    //Test for invalid Model
+        //    if (!ModelState.IsValid) { return BadRequest(); }
+
+        //    //Tests for missing record (bad ID value)
+        //    if (!_db.Interviews.Any(u => u.InterviewId == id)) { return NotFound(); }
+        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
+        //    interview.InterviewId = id;
+        //    _db.Update(interview);
+        //    _db.SaveChanges();
+        //    return Accepted(interview);
+        //}
+
+        //[HttpPut("question/{id}")]
+        //public ActionResult PutQuestion(long id, [FromBody] Question question)
+        //{
+        //    //Test for invalid Model
+        //    if (!ModelState.IsValid) { return BadRequest(); }
+
+        //    //Tests for missing record (bad ID value)
+        //    if (!_db.Questions.Any(u => u.QuestionId == id)) { return NotFound(); }
+        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
+        //    question.QuestionId = id;
+        //    _db.Update(question);
+        //    _db.SaveChanges();
+        //    return Accepted(question);
+        //}
+
+        //[HttpPut("response/{id}")]
+        //public ActionResult PutResponse(long id, [FromBody] Response response)
+        //{
+        //    //Test for invalid Model
+        //    if (!ModelState.IsValid) { return BadRequest(); }
+
+        //    //Tests for missing record (bad ID value)
+        //    if (!_db.Responses.Any(u => u.ResponseId == id)) { return NotFound(); }
+        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
+        //    response.ResponseId = id;
+        //    _db.Update(response);
+        //    _db.SaveChanges();
+        //    return Accepted(response);
+        //}
+        //[HttpPut("session/{id}")]
+        //public ActionResult PutSession(long id, [FromBody] Session session)
+        //{
+        //    //Test for invalid Model
+        //    if (!ModelState.IsValid) { return BadRequest(); }
+
+        //    //Tests for missing record (bad ID value)
+        //    if (!_db.Sessions.Any(u => u.SessionId == id)) { return NotFound(); }
+        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
+        //    session.SessionId = id;
+        //    _db.Update(session);
+        //    _db.SaveChanges();
+        //    return Accepted(session);
+        //}
+
+
+
         [HttpPut("user/{id}")]
-        public ActionResult PutUser(long id, [FromBody] User user)
+        public IActionResult PutUser(long id, [FromBody] JsonElement updateJson)
         {
-            // Tests for missing record (bad ID value)
-            if (!_db.Users.Any(u => u.UserId == id))
+            // Get the entity type for the model name
+            var entityType = _db.Model.FindEntityType($"SuiteCareers.Models.User");
+
+            // If the entity type doesn't exist, return NotFound
+            if (entityType == null)
             {
                 return NotFound();
             }
 
-            // Retrieve the user from the database
-            User tempUser = _db.Users.Single(u => u.UserId == id);
+            // Get the entity instance with the specified ID
+            var entity = _db.Find(entityType.ClrType, id);
 
-            // Update the user properties with the values from the request body, if present
-            if (user.FirstName != null)
+            // If the entity instance doesn't exist, return NotFound
+            if (entity == null)
             {
-                tempUser.FirstName = user.FirstName;
-            }
-            if (user.LastName != null)
-            {
-                tempUser.LastName = user.LastName;
-            }
-            if (user.Email != null)
-            {
-                tempUser.Email = user.Email;
-            }
-            if (user.City != null)
-            {
-                tempUser.City = user.City;
-            }
-            if (user.State != null)
-            {
-                tempUser.State = user.State;
+                return NotFound();
             }
 
-            _db.Update(tempUser);
+            // Parse the JSON update object into a dictionary
+            var updateDict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(updateJson.GetRawText());
+            
+
+            User User = (User)entity;
+            // Iterate through the properties of the entity type
+            foreach (var prop in entityType.GetProperties())
+            {
+                string propName = char.ToUpper(prop.Name[0]) + prop.Name.Substring(1);
+                
+                // If the property name is in the update dictionary, update the entity property
+                if (updateDict.TryGetValue(propName, out JsonElement propValue))
+                {
+
+                    var jsonString = propValue.GetRawText();
+                    var convertedValue = JsonSerializer.Deserialize(jsonString, prop.ClrType);
+
+                    User.GetType().GetProperty(propName)?.SetValue(User, convertedValue);
+
+                }
+            }
+
             // Save the changes to the database
+            _db.Update(User);
             _db.SaveChanges();
 
-            // Return the updated user
-            return Accepted(tempUser);
+            // Return the updated entity
+            return Accepted(entity);
         }
 
-        [HttpPut("interview/{id}")]
-        public ActionResult PutInterview(long id, [FromBody] Interview interview)
+        [HttpPut("userdescription/{id}")]
+        public IActionResult Put(long id, [FromBody] JsonElement updateJson)
         {
-            //Test for invalid Model
-            if (!ModelState.IsValid) { return BadRequest(); }
+            // Get the entity type for the model name
+            var entityType = _db.Model.FindEntityType($"SuiteCareers.Models.UserDescription");
 
-            //Tests for missing record (bad ID value)
-            if (!_db.Interviews.Any(u => u.InterviewId == id)) { return NotFound(); }
-            //Makes changes to DbContext, save to Database -> return Accepted(writer);
-            interview.InterviewId = id;
-            _db.Update(interview);
+            // If the entity type doesn't exist, return NotFound
+            if (entityType == null)
+            {
+                return NotFound();
+            }
+
+            // Get the entity instance with the specified ID
+            var entity = _db.Find(entityType.ClrType, id);
+
+            // If the entity instance doesn't exist, return NotFound
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            // Parse the JSON update object into a dictionary
+            var updateDict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(updateJson.GetRawText());
+
+
+            UserDescription UserDescription = (UserDescription)entity;
+            // Iterate through the properties of the entity type
+            foreach (var prop in entityType.GetProperties())
+            {
+                string propName = char.ToUpper(prop.Name[0]) + prop.Name.Substring(1);
+
+                // If the property name is in the update dictionary, update the entity property
+                if (updateDict.TryGetValue(prop.Name, out JsonElement propValue))
+                {
+
+                    var jsonString = propValue.GetRawText();
+                    var convertedValue = JsonSerializer.Deserialize(jsonString, prop.ClrType);
+
+                    User.GetType().GetProperty(prop.Name)?.SetValue(User, convertedValue);
+
+                }
+            }
+
+            // Save the changes to the database
+            _db.Update(User);
             _db.SaveChanges();
-            return Accepted(interview);
+
+            // Return the updated entity
+            return Accepted(entity);
         }
-
-        [HttpPut("question/{id}")]
-        public ActionResult PutQuestion(long id, [FromBody] Question question)
-        {
-            //Test for invalid Model
-            if (!ModelState.IsValid) { return BadRequest(); }
-
-            //Tests for missing record (bad ID value)
-            if (!_db.Questions.Any(u => u.QuestionId == id)) { return NotFound(); }
-            //Makes changes to DbContext, save to Database -> return Accepted(writer);
-            question.QuestionId = id;
-            _db.Update(question);
-            _db.SaveChanges();
-            return Accepted(question);
-        }
-
-        [HttpPut("response/{id}")]
-        public ActionResult PutResponse(long id, [FromBody] Response response)
-        {
-            //Test for invalid Model
-            if (!ModelState.IsValid) { return BadRequest(); }
-
-            //Tests for missing record (bad ID value)
-            if (!_db.Responses.Any(u => u.ResponseId == id)) { return NotFound(); }
-            //Makes changes to DbContext, save to Database -> return Accepted(writer);
-            response.ResponseId = id;
-            _db.Update(response);
-            _db.SaveChanges();
-            return Accepted(response);
-        }
-        [HttpPut("session/{id}")]
-        public ActionResult PutSession(long id, [FromBody] Session session)
-        {
-            //Test for invalid Model
-            if (!ModelState.IsValid) { return BadRequest(); }
-
-            //Tests for missing record (bad ID value)
-            if (!_db.Sessions.Any(u => u.SessionId == id)) { return NotFound(); }
-            //Makes changes to DbContext, save to Database -> return Accepted(writer);
-            session.SessionId = id;
-            _db.Update(session);
-            _db.SaveChanges();
-            return Accepted(session);
-        }
-
-
-
-        //[HttpPut("{modelName}/{id}")]
-        //public IActionResult Put(string modelName, long id, [FromBody] JsonElement updateJson)
-        //{
-        //    modelName = char.ToUpper(modelName[0]) + modelName.Substring(1);
-        //    // Get the entity type for the model name
-        //    var entityType = _db.Model.FindEntityType($"SuiteCareers.Models.{modelName}");
-
-        //    // If the entity type doesn't exist, return NotFound
-        //    if (entityType == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    // Get the entity instance with the specified ID
-        //    var entity = _db.Find(entityType.ClrType, id);
-
-        //    // If the entity instance doesn't exist, return NotFound
-        //    if (entity == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    // Parse the JSON update object into a dictionary
-        //    var updateDict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(updateJson.GetRawText());
-
-        //    User User = (User)entity;
-        //    // Iterate through the properties of the entity type
-        //    foreach (var prop in entityType.GetProperties())
-        //    {
-        //        string propName = char.ToLower(prop.Name[0]) + prop.Name.Substring(1);
-        //        object value = User.GetType().GetProperty(propName)?.GetValue(User);
-        //        // If the property name is in the update dictionary, update the entity property
-        //        if (updateDict.TryGetValue(propName, out JsonElement propValue))
-        //        {
-
-        //            var jsonString = propValue.GetRawText();
-        //            var convertedValue = JsonSerializer.Deserialize(jsonString, prop.ClrType);
-
-        //            User.GetType().GetProperty(propName)?.SetValue(User, convertedValue);
-
-        //        }
-        //    }
-
-        //    // Save the changes to the database
-        //    _db.Update(User);
-        //    _db.SaveChanges();
-
-        //    // Return the updated entity
-        //    return Accepted(entity);
-        //}
 
     }
 }

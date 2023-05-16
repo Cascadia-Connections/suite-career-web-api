@@ -7,8 +7,15 @@ namespace SuiteCareers.Models
     {
         [Key]
         public long DescriptionId { get; set; }
-        [Required]
-        public string EducationLevel { get; set; }
+        
+        public enum EducationLevel {
+            MiddleSchool,
+            HighSchool,
+            Undergraduate,
+            Graduate,
+            Doctorate
+        }
+
         [Required]
         public string WorkExperience { get; set; }
         [Required]
@@ -17,7 +24,18 @@ namespace SuiteCareers.Models
         public DateTime Date { get; set; }
         public long UserId { get; set; }
         public User? User { get; set; }
-
+        public enum Improvements
+        {
+            InterviewQuestions
+        }
+        public enum Interests
+        {
+            Math,
+            ComputerProgramming,
+            Photography,
+            Economics,
+            Banking
+        }
 
     }
 }
