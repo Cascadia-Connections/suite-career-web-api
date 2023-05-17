@@ -28,17 +28,17 @@ public class HomeController : Controller
         return View(dashboardVM);
     }
 
-    public IActionResult UserAnalytics()
+    public IActionResult Questions()
     {
         return View();
     }
 
-    public IActionResult UserDemographics()
+    public IActionResult Sessions()
     {
         return View();
     }
 
-    public IActionResult InterviewAnalytics()
+    public IActionResult Users()
     {
         return View();
     }
