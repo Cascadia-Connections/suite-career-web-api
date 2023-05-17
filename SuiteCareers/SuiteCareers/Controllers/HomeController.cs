@@ -23,7 +23,10 @@ public class HomeController : Controller
         {
             NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),
             TotalUsers = _db.Users.Count(),
-            AvgSessionLength = _db.Sessions.Count()
+            /*AvgSessionLength = */
+            TotalSessions = _db.Sessions.Count(),
+            /*QuestionsAnswered =
+            NewQuestions =*/
         };
         return View(dashboardVM);
     }
