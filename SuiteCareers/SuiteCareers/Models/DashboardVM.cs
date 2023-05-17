@@ -6,6 +6,7 @@ namespace SuiteCareers.Models
     {
         public int NewUser { get; set; }
         public int TotalUsers { get; set; }
+        public int AvgSessionLength { get; set; }
 
 
         /*public IEnumerable<User>? Users { get; set; }
