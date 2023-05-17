@@ -21,7 +21,8 @@ public class HomeController : Controller
     {
         var dashboardVM = new DashboardVM
         {
-            NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count()
+            NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),
+            TotalUsers = _db.Users.Count()
         };
         return View(dashboardVM);
     }
