@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SuiteCareers.Models;
 namespace SuiteCareers.Data
 
 {
-	public class SuiteCareersDbContext:DbContext
-	{
+    public class SuiteCareersDbContext : DbContext
+    {
         public SuiteCareersDbContext(DbContextOptions<SuiteCareersDbContext> options) : base(options)
         { }
 

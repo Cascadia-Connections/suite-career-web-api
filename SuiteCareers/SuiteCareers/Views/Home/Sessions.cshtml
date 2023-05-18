@@ -53,22 +53,22 @@
                         <table id="allSessions"class="table table-hover flex-fill mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Session ID</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Time</th>
+                                    <th scope="col">@Html.ActionLink("Session ID", "Sessions", new { sortOrder = ViewBag.SessionIDSortParm })</th>
+                                    <th scope="col">@Html.ActionLink("User", "Sessions", new { sortOrder = ViewBag.UserSortParm })</th>
+                                    <th scope="col">@Html.ActionLink("Date", "Sessions", new { sortOrder = ViewBag.DateSortParm }) </th>
+                                    <th scope="col">@Html.ActionLink("Time", "Sessions", new { sortOrder = ViewBag.TimeSortParm }) </th>
                                     <th scope="col">Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var session in Model)
                                 {
-                                    <tr>
-                                        <td scope="row">
-                                            @session.User.FirstName @session.User.LastName
-                                        </td>
+                                    <tr>                                        
                                         <td scope="row">
                                             @session.SessionId
+                                        </td>
+                                        <td scope="row">
+                                            @session.User.LastName, @session.User.FirstName
                                         </td>
                                         <td scope="row">
                                             @session.Date.ToString("MMMM d yyyy")
