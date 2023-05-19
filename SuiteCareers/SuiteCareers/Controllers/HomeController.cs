@@ -27,6 +27,10 @@ public class HomeController : Controller
             TotalSessions = _db.Sessions.Count(),
             /*QuestionsAnswered =
             NewQuestions =*/
+
+            /*ActiveUsers =*/
+            /*ActiveSessions = */
+
         };
         return View(dashboardVM);
     }

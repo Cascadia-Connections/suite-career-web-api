@@ -118,6 +118,8 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var Session in Model.Sessions) 
+                                { 
                                 <tr>
                                     <td scope="row">Fergy Thomas</td>
                                     <td>05/29/2023 09:45 AM</td>
@@ -143,6 +145,7 @@
                                     <td>05/29/2023 09:09 AM</td>
                                     <td>9m 28s</td>
                                 </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
