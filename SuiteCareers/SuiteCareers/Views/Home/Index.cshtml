@@ -118,11 +118,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var Session in Model.Sessions) 
+                                @foreach (var RecentSessions in Model) 
                                 { 
                                 <tr>
                                     <td scope="row">
-                                       @*User first and last name data*@
+                                       @RecentSession.User.FirstName @RecentSessions.User.LastName
                                      </td>
                                      <td scope="row">
                                         @*Session completion time data*@

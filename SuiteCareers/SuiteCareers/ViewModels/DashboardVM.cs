@@ -19,6 +19,6 @@ namespace SuiteCareers.ViewModels
         public int ActiveUsers { get; set; }
         public int ActiveSessions { get; set; }
 
-        public IEnumerable<RecentSession> RecentSessions { get; set; }
+        public IEnumerable<RecentSession>? RecentSessions { get; set; }
     }
 }

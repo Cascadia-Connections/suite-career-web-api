@@ -9,13 +9,13 @@ namespace SuiteCareers.ViewModels
     public class RecentSession
     
      {
-        public int UserId { get; set; }
+       /* public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long CompletionTime { get; set; }
-        public long Duration { get; set; }
+        public long Duration { get; set; }*/
 
-        public IEnumerable<Session> RecentSessions { get; set; }
+        public IEnumerable<Session>? RecentSessions { get; set; }
 
     }
 
