@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.Design;
 
-namespace SuiteCareers.Models
+namespace SuiteCareers.ViewModels
 {
     public class DashboardVM
     {
@@ -19,8 +19,6 @@ namespace SuiteCareers.Models
         public int ActiveUsers { get; set; }
         public int ActiveSessions { get; set; }
 
-        /*List data*/
-        public IEnumerable<Session> Sessions { get; set; }
-        public IEnumerable<Question> Questions { get; set; }
+        public IEnumerable<RecentSession> RecentSessions { get; set; }
     }
 }

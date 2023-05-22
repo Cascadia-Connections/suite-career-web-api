@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SuiteCareers.Models;
 using SuiteCareers.Data;
 using Microsoft.EntityFrameworkCore;
+using SuiteCareers.ViewModels;
 
 namespace SuiteCareers.Controllers;
 
@@ -19,19 +20,26 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var dashboardVM = new DashboardVM
+
+        var RecentSession = new ViewModels.RecentSession
+        {
+            RecentSessions = _db.Sessions.OrderBy(b => b.Date).Take(5).OrderByDescending(b => b.Date).ToList(),
+        };
+
+        var dashboardVM = new ViewModels.DashboardVM
         {
             NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),
             TotalUsers = _db.Users.Count(),
             /*AvgSessionLength = */
             TotalSessions = _db.Sessions.Count(),
-            /*QuestionsAnswered =
-            NewQuestions =*/
+            /*QuestionsAnswered =*/
+            /*NewQuestions = _db.Questions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),*/
 
             /*ActiveUsers =*/
             /*ActiveSessions = */
-
+            RecentSessions = (IEnumerable<RecentSession>)RecentSession
         };
+        
         return View(dashboardVM);
     }
 
