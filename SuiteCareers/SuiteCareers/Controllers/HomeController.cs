@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SuiteCareers.Data;
 using SuiteCareers.Models;
 using System.Diagnostics;
@@ -38,14 +37,38 @@ namespace SuiteCareers.Controllers
             return View();
         }
         /* [HttpGet]*/
-        public IActionResult Sessions(string sortOrder)
+        public IActionResult Sessions(
+            string term = "",
+            string orderBy = "",
+            int currentPage = 1,
+            DateTime? start = null,
+            DateTime? end = null
+        )
         {
-            ViewBag.UserSortParm = sortOrder == "user" ? "user_desc" : "user";
-            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
-            ViewBag.TimeSortParm = sortOrder == "time" ? "time_desc" : "time";
-            ViewBag.SessionIDSortParm = sortOrder == "session_id" ? "session_id_desc" : "session_id";
-            IEnumerable<Session> sessions = _db.Sessions.Include(s => s.User);
-            switch (sortOrder)
+            term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
+            var sessionData = new SessionsVM();
+
+            sessionData.UserSortParm = String.IsNullOrEmpty(orderBy) ? "user_desc" : "";
+            sessionData.UserSortParm = orderBy == "user" ? "user_desc" : "user";
+            sessionData.DateSortParm = orderBy == "date" ? "date_desc" : "date";
+            sessionData.TimeSortParm = orderBy == "time" ? "time_desc" : "time";
+            sessionData.SessionIDSortParm = orderBy == "session_id" ? "session_id_desc" : "session_id";
+
+            var sessions = _db.Sessions.Where(session =>
+            (term == "" ||
+            session.User.LastName.ToLower().StartsWith(term) ||
+            session.User.FirstName.ToLower().StartsWith(term) ||
+            session.SessionId.ToString().StartsWith(term)) &&
+            (!start.HasValue || session.Date >= start.Value) &&
+            (!end.HasValue || session.Date <= end.Value))
+            .Select(session => new Session
+            {
+                SessionId = session.SessionId,
+                Date = session.Date,
+                User = session.User
+            });
+
+            switch (orderBy)
             {
                 case "user":
                     sessions = sessions.OrderBy(s => s.User.LastName).ThenBy(s => s.User.FirstName);
@@ -72,7 +95,17 @@ namespace SuiteCareers.Controllers
                     sessions = sessions.OrderByDescending(s => s.Date);
                     break;
             }
-            return View(sessions.ToList());
+            int totalRecords = sessions.Count();
+            int pageSize = 10;
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+            sessions = sessions.Skip((currentPage - 1) * pageSize).Take(pageSize);
+            sessionData.Sessions = sessions;
+            sessionData.CurrentPage = currentPage;
+            sessionData.TotalPages = totalPages;
+            sessionData.Term = term;
+            sessionData.PageSize = pageSize;
+            sessionData.OrderBy = orderBy;
+            return View(sessionData);
         }
 
         public IActionResult Privacy()

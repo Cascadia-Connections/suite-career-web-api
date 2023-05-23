@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SuiteCareers.Models.Session>
+﻿@model SuiteCareers.Models.SessionsVM
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Sessions";
@@ -12,14 +12,25 @@
                 <div class="card-body p-4 d-flex flex-column">
 
                     <div class="row justify-content-between">
+
+                        <form id="sessionsForm" asp-action="Sessions">
                         <div class="col-sm-6 mb-sm-2">
                             <div class="row h-100 ">
                                 <div class="col-lg-6 align-self-center">
                                     <p class="fw-bold fs-5 mb-0">All Sessions</p>
                                 </div>
-                                <div class="col-lg-6 align-self-center py-1">
-                                    <input type="text" id="searchInput" placeholder="Search..." />
-                                </div>
+                                    <div class="col-lg-6 align-self-center py-1">
+                                        <input type="text" id="searchInput" name="term" class="form-control" value="@Model.Term" placeholder="Search by user or session ID" />
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div>
+                                            <button type="submit" class="btn btn-primary me-1">Search</button>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-primary" onclick="resetAndSubmitForm()">Reset</button>
+                                        </div>
+                                    </div>
+                                
                             </div>
 
                         </div>
@@ -27,11 +38,12 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-lg-5 py-1">
+                                    
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">From</span>
                                         </div>
-                                        <input type="date" class="form-control" id="from-date" name="from-date">
+                                        <input type="date" class="form-control" id="from-date" name="start">
                                     </div>
                                 </div>
                                 <div class="col-lg-5 py-1">
@@ -39,29 +51,39 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">To</span>
                                         </div>
-                                        <input type="date" class="form-control" id="to-date" name="to-date">
+                                        <input type="date" class="form-control" id="to-date" name="end">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 py-1 d-sm-flex justify-content-end">
-                                    <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+                                    @*<button id="filter" type="submit" class="btn btn-primary">Filter</button>*@
                                 </div>
                             </div>
+                            
                         </div>
+                        </form>
                     </div>
                     
                     <div class="row flex-fill d-flex">
                         <table id="allSessions"class="table table-hover flex-fill mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">@Html.ActionLink("Session ID", "Sessions", new { sortOrder = ViewBag.SessionIDSortParm })</th>
-                                    <th scope="col">@Html.ActionLink("User", "Sessions", new { sortOrder = ViewBag.UserSortParm })</th>
-                                    <th scope="col">@Html.ActionLink("Date", "Sessions", new { sortOrder = ViewBag.DateSortParm }) </th>
-                                    <th scope="col">@Html.ActionLink("Time", "Sessions", new { sortOrder = ViewBag.TimeSortParm }) </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.SessionIDSortParm">Session ID</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.UserSortParm">User</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.DateSortParm">Date</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.TimeSortParm">Time</a>
+                                    </th>
                                     <th scope="col">Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var session in Model)
+                                @foreach (var session in Model.Sessions)
                                 {
                                     <tr>                                        
                                         <td scope="row">
@@ -83,6 +105,37 @@
                                 }
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@(Model.CurrentPage-1)" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    if (i == Model.CurrentPage)
+                                    {
+                                        <li class="page-item"><a class="page-link active" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@i"> @i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@i"> @i</a></li>
+                                    }
+                                }
+                                @if (Model.CurrentPage < Model.TotalPages)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@(Model.CurrentPage+1)" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -92,15 +145,15 @@
 
 @section scripts{
     <script>
-        //Search Bar
-        $(document).ready(function() {
-            $("#searchInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("table tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
+        function resetAndSubmitForm() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('sessionsForm').submit();
+        }
+    </script>
+}
+
+@*@section scripts{
+    <script>
 
         //Date Filtering
         // Get table rows and date filter elements
@@ -139,4 +192,4 @@
         });
     </script>
     
-}
+}*@
