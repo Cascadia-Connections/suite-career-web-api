@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.Design;
+using SuiteCareers.Models;
 
 namespace SuiteCareers.ViewModels
 {
@@ -19,6 +20,6 @@ namespace SuiteCareers.ViewModels
         public int ActiveUsers { get; set; }
         public int ActiveSessions { get; set; }
 
-        public IEnumerable<RecentSession>? RecentSessions { get; set; }
+        public IEnumerable<Session>? RecentSessions { get; set; }
     }
 }

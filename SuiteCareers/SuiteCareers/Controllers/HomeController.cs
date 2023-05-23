@@ -21,11 +21,6 @@ public class HomeController : Controller
     public IActionResult Index()
     {
 
-        var RecentSession = new ViewModels.RecentSession
-        {
-            RecentSessions = _db.Sessions.OrderBy(b => b.Date).Take(5).OrderByDescending(b => b.Date).ToList(),
-        };
-
         var dashboardVM = new ViewModels.DashboardVM
         {
             NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),
@@ -37,7 +32,9 @@ public class HomeController : Controller
 
             /*ActiveUsers =*/
             /*ActiveSessions = */
-            RecentSessions = (IEnumerable<RecentSession>)RecentSession
+            
+            RecentSessions = _db.Sessions.Include(b => b.User).OrderByDescending(b => b.Date).Take(5).ToList(),
+
         };
         
         return View(dashboardVM);

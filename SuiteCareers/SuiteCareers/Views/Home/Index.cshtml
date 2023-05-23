@@ -1,9 +1,11 @@
-﻿@{
+﻿@model SuiteCareers.ViewModels.DashboardVM
+
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "_Layout";
 }
 
-@model DashboardVM
+
 
 <div style="height: 100%">
 
@@ -118,14 +120,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var RecentSession in Model) 
+                                @foreach (var recentSession in Model.RecentSessions) 
                                 { 
                                 <tr>
                                     <td scope="row">
-                                       @RecentSession.User.FirstName @RecentSessions.User.LastName
+                                       @recentSession.User.FirstName @recentSession.User.LastName
                                      </td>
                                      <td scope="row">
-                                        @*Session completion time data*@
+                                        @recentSession.Date
                                      </td>
                                      <td scope="row">
                                        @*Session length data*@
