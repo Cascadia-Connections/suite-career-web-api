@@ -43,7 +43,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">From</span>
                                         </div>
-                                            <input type="date" class="form-control" id="from-date" name="start" @*setStartDate="@Model.Start.Value.ToString("yyyy-MM-dd")"*@ value="@Model.Start.Value.ToString("yyyy-MM-dd")">
+                                            <input type="date" class="form-control" id="from-date" name="start" value="@((Model.Start != null) ? Model.Start.Value.ToString("yyyy-MM-dd") : string.Empty)">
                                     </div>
                                 </div>
                                 <div class="col-lg-5 py-1">
@@ -51,11 +51,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">To</span>
                                         </div>
-                                            <input type="date" class="form-control" id="to-date" name="end" @*setEndDate="@Model.End.Value.ToString("yyyy-MM-dd")"*@ value="@Model.End.Value.ToString("yyyy-MM-dd")">
+                                            <input type="date" class="form-control" id="to-date" name="end" value="@((Model.End != null) ? Model.End.Value.ToString("yyyy-MM-dd") : string.Empty)">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 py-1 d-sm-flex justify-content-end">
-                                    @*<button id="filter" type="submit" class="btn btn-primary">Filter</button>*@
                                 </div>
                             </div>
                             
@@ -68,16 +67,16 @@
                             <thead>
                                 <tr>
                                     <th scope="col">
-                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.SessionIDSortParm">Session ID</a>
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.SessionIDSortParm&start=@Model.Start&end=@Model.End">Session ID</a>
                                     </th>
                                     <th scope="col">
-                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.UserSortParm">User</a>
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.UserSortParm&start=@Model.Start&end=@Model.End">User</a>
                                     </th>
                                     <th scope="col">
-                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.DateSortParm">Date</a>
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.DateSortParm&start=@Model.Start&end=@Model.End">Date</a>
                                     </th>
                                     <th scope="col">
-                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.TimeSortParm">Time</a>
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.TimeSortParm&start=@Model.Start&end=@Model.End">Time</a>
                                     </th>
                                     <th scope="col">Duration</th>
                                 </tr>
@@ -106,11 +105,11 @@
                             </tbody>
                         </table>
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination">
+                            <ul class="pagination justify-content-center mt-3">
                                 @if (Model.CurrentPage > 1)
                                 {
                                     <li class="page-item">
-                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@(Model.CurrentPage-1)" aria-label="Previous">
+                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@(Model.CurrentPage-1)" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
@@ -119,17 +118,17 @@
                                 {
                                     if (i == Model.CurrentPage)
                                     {
-                                        <li class="page-item"><a class="page-link active" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@i"> @i</a></li>
+                                        <li class="page-item active"><a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@i"> @i</a></li>
                                     }
                                     else
                                     {
-                                        <li class="page-item"><a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@i"> @i</a></li>
+                                        <li class="page-item"><a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@i"> @i</a></li>
                                     }
                                 }
                                 @if (Model.CurrentPage < Model.TotalPages)
                                 {
                                     <li class="page-item">
-                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&currentPage=@(Model.CurrentPage+1)" aria-label="Next">
+                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@(Model.CurrentPage+1)" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
@@ -147,8 +146,8 @@
     <script>
         function resetAndSubmitForm() {
             document.getElementById('searchInput').value = '';
-            document.getElementById('from-date').value = null;
-            document.getElementById('to-date').value = null;
+            document.getElementById('from-date').value = '';
+            document.getElementById('to-date').value = '';
             document.getElementById('sessionsForm').submit();
         }
     </script>
