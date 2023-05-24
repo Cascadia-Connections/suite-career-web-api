@@ -48,7 +48,6 @@ namespace SuiteCareers.Controllers
             term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
             var sessionData = new SessionsVM();
 
-            /*sessionData.UserSortParm = String.IsNullOrEmpty(orderBy) ? "user_desc" : "user";*/
             sessionData.UserSortParm = orderBy == "user" ? "user_desc" : "user";
             sessionData.DateSortParm = orderBy == "date" ? "date_desc" : "date";
             sessionData.TimeSortParm = orderBy == "time" ? "time_desc" : "time";
@@ -105,12 +104,6 @@ namespace SuiteCareers.Controllers
             sessionData.Term = term;
             sessionData.PageSize = pageSize;
             sessionData.OrderBy = orderBy;
-            /*sessionData.Start = start.HasValue ? start.Value : DateTime DT = new DateTime(2019, 05, 09, 9, 15, 0);
-            sessionData.End = end.HasValue ? end.Value : DateTime.Now;*/
-            /*sessionData.Start = start.HasValue ? start.Value : DateTime.MinValue;
-            sessionData.End = end.HasValue ? end.Value : DateTime.Now;*/
-            /*sessionData.Start = start.HasValue ? start.Value : start.Value;
-            sessionData.End = end.HasValue ? end.Value : end.Value;*/
             sessionData.Start = start;
             sessionData.End = end;
             return View(sessionData);

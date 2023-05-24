@@ -27,8 +27,20 @@ body {
     background-color: #E7F0F4;
 }
 
-/* Index/Dashboad View */
+.page-item.active .page-link, .btn-primary {
+    background-color: #006b5e;
+    border-color: #006b5e;
+}
 
+a, .page-link {
+    color: #006b5e;
+}
+
+.bg-primary {
+    background-color: #006b5e !important;
+}
+
+/* Index/Dashboad View */
 #recent-sessions {
     height: 400px;
 }
@@ -58,5 +70,13 @@ body {
     height: 2.2rem;
 }
 
+.searchInput-container {
+    width: 35%;
+    padding-left: 0.25rem;
+}
 
-
+@media (max-width: 768px) {
+    .searchInput-container {
+        width: 100%;
+    }
+}

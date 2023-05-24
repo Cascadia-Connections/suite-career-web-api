@@ -9,41 +9,37 @@
     <div class="row my-3">
         <div class="col-xl-12">
             <div class="card overflow-auto mh-100">
-                <div class="card-body p-4 d-flex flex-column">
+                <div class="card-body p-5 d-flex flex-column">
 
                     <div class="row justify-content-between">
-
-                        <form id="sessionsForm" asp-action="Sessions">
-                        <div class="col-sm-6 mb-sm-2">
-                            <div class="row h-100 ">
-                                <div class="col-lg-6 align-self-center">
-                                    <p class="fw-bold fs-5 mb-0">All Sessions</p>
-                                </div>
-                                    <div class="col-lg-6 align-self-center py-1">
-                                        <input type="text" id="searchInput" name="term" class="form-control" value="@Model.Term" placeholder="Search by user or session ID" />
-                                    </div>
-                                    <div style="display: flex;">
-                                        <div>
-                                            <button type="submit" class="btn btn-primary me-1">Search</button>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary" onclick="resetAndSubmitForm()">Reset</button>
-                                        </div>
-                                    </div>
-                                
-                            </div>
-
+                        <div class="flex-column">
+                            <h1 class="fw-bold fs-5 mb-2">All Sessions</h1>
                         </div>
-
-                        <div class="col-sm-6">
+                        <form id="sessionsForm" asp-action="Sessions">
+                            <div class="row mb-sm-2 align-items-center d-flex">
+                                <div class="d-flex py-1">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary me-1">Search</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary" onclick="resetAndSubmitForm()">Reset</button>
+                                    </div>
+                                    <div class="searchInput-container">
+                                        <input type="text" id="searchInput" name="term" class="form-control" style="height:initial;" value="@Model.Term" placeholder="Search by user or session ID" />
+                                    </div>
+                                </div>
+                                <div class="mx-lg-1">
+                                    
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-5 py-1">
-                                    
+
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">From</span>
                                         </div>
-                                            <input type="date" class="form-control" id="from-date" name="start" value="@((Model.Start != null) ? Model.Start.Value.ToString("yyyy-MM-dd") : string.Empty)">
+                                        <input type="date" class="form-control" id="from-date" name="start" value="@((Model.Start != null) ? Model.Start.Value.ToString("yyyy-MM-dd") : string.Empty)">
                                     </div>
                                 </div>
                                 <div class="col-lg-5 py-1">
@@ -51,14 +47,12 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">To</span>
                                         </div>
-                                            <input type="date" class="form-control" id="to-date" name="end" value="@((Model.End != null) ? Model.End.Value.ToString("yyyy-MM-dd") : string.Empty)">
+                                        <input type="date" class="form-control" id="to-date" name="end" value="@((Model.End != null) ? Model.End.Value.ToString("yyyy-MM-dd") : string.Empty)">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 py-1 d-sm-flex justify-content-end">
                                 </div>
                             </div>
-                            
-                        </div>
                         </form>
                     </div>
                     
@@ -152,45 +146,3 @@
         }
     </script>
 }
-
-@*@section scripts{
-    <script>
-
-        //Date Filtering
-        // Get table rows and date filter elements
-        const tableRows = document.querySelectorAll('table tbody tr');
-        const fromDateInput = document.getElementById('from-date');
-        const toDateInput = document.getElementById('to-date');
-        const filterButton = document.getElementById('filter');
-
-        // Add event listener to filter button
-        filterButton.addEventListener('click', () => {
-            // Get dates from input values
-            const fromDate = new Date(fromDateInput.value);
-            fromDate.setUTCHours(fromDate.getUTCHours() + 7);
-            const toDate = new Date(toDateInput.value);
-            toDate.setUTCHours(toDate.getUTCHours() + 7);
-
-            // Loop through each row in the table
-            for (let i = 0; i < tableRows.length; i++) {
-                // Get the date cell for the row
-                const dateCell = tableRows[i].querySelector('.date-cell');
-
-                // Check if the row has a date cell
-                if (dateCell) {
-                    // Get the date value from the cell
-                    const dateValue = new Date(dateCell.textContent);
-                    console.log(dateValue);
-
-                    // Hide or show the row based on the date range
-                    if (dateValue >= fromDate && dateValue <= toDate) {
-                        tableRows[i].classList.remove('d-none');
-                    } else {
-                        tableRows[i].classList.add('d-none');
-                    }
-                }
-            }
-        });
-    </script>
-    
-}*@
