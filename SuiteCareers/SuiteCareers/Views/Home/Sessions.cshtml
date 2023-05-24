@@ -43,7 +43,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">From</span>
                                         </div>
-                                        <input type="date" class="form-control" id="from-date" name="start">
+                                            <input type="date" class="form-control" id="from-date" name="start" @*setStartDate="@Model.Start.Value.ToString("yyyy-MM-dd")"*@ value="@Model.Start.Value.ToString("yyyy-MM-dd")">
                                     </div>
                                 </div>
                                 <div class="col-lg-5 py-1">
@@ -51,7 +51,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">To</span>
                                         </div>
-                                        <input type="date" class="form-control" id="to-date" name="end">
+                                            <input type="date" class="form-control" id="to-date" name="end" @*setEndDate="@Model.End.Value.ToString("yyyy-MM-dd")"*@ value="@Model.End.Value.ToString("yyyy-MM-dd")">
                                     </div>
                                 </div>
                                 <div class="col-lg-2 py-1 d-sm-flex justify-content-end">
@@ -147,6 +147,8 @@
     <script>
         function resetAndSubmitForm() {
             document.getElementById('searchInput').value = '';
+            document.getElementById('from-date').value = null;
+            document.getElementById('to-date').value = null;
             document.getElementById('sessionsForm').submit();
         }
     </script>

@@ -8,7 +8,7 @@ namespace SuiteCareers.Models
         public long SessionId { get; set; }
         [Required(ErrorMessage = "Please enter the date")]
         public DateTime Date { get; set; }
-        public IQueryable<User> User { get; set; }
+        public ICollection<User> User { get; set; }
         public string? FirstName { get; set; }
         [Required(ErrorMessage = "Please enter your last name")]
         public string? LastName { get; set; }
@@ -22,7 +22,7 @@ namespace SuiteCareers.Models
         public int TotalPages { get; set; }
         public string? Term { get; set; }
         public string? OrderBy { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
     }
 }
