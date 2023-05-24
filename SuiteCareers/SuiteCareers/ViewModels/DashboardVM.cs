@@ -21,5 +21,6 @@ namespace SuiteCareers.ViewModels
         public int ActiveSessions { get; set; }
 
         public IEnumerable<Session>? RecentSessions { get; set; }
+        public IEnumerable<Question>? TopQuestions { get; set; }
     }
 }
