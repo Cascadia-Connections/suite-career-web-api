@@ -34,7 +34,7 @@ public class HomeController : Controller
             /*ActiveSessions = */
             
             RecentSessions = _db.Sessions.Include(b => b.User).OrderByDescending(b => b.Date).Take(5).ToList(),
-            /*TopQuestions = _db.Questions.OrderByDescending(b => b.AnswerCount).ToList()*/
+            TopQuestions = _db.Questions.OrderByDescending(b => b.QuestionId).Take(5).ToList()
 
         };
         
