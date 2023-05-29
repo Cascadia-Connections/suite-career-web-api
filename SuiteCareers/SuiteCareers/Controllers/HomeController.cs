@@ -17,7 +17,7 @@ public class HomeController : Controller
         _db = db;
         _logger = logger;
     }
-
+    [HttpGet]
     public IActionResult Index()
     {
 
@@ -39,6 +39,12 @@ public class HomeController : Controller
         };
         
         return View(dashboardVM);
+    }
+
+    [HttpPost]
+    public IActionResult DashboardFilter(DashboardVM dashboardVM) { 
+            
+            return View();
     }
 
     public IActionResult Questions()

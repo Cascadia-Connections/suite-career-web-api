@@ -20,7 +20,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">From Date</span>
                     </div>
-                    <input type="date" class="form-control" id="from-date" name="from-date" @*asp-for="FromDate"*@>
+                    <input type="date" class="form-control" id="from-date" name="start" value="@((Model.Start != null) ? Model.Start.Value.ToString("yyyy-MM-dd") : string.Empty)">
                 </div>
             </div>
             <div class="col-auto">
@@ -28,7 +28,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">To Date</span>
                     </div>
-                    <input type="date" class="form-control" id="to-date" name="to-date">
+                    <input type="date" class="form-control" id="to-date" name="end" value="@((Model.End != null) ? Model.End.Value.ToString("yyyy-MM-dd") : string.Empty)">
                 </div>
             </div>
             <div class="col-auto">
