@@ -32,12 +32,6 @@ namespace SuiteCareers.Controllers
             return Ok(_db.Users);
         }
 
-        [HttpGet("userdescriptions")]
-        public IActionResult GetUserDescriptions()
-        {
-            return Ok(_db.UserDescriptions);
-        }
-
         [HttpGet("interviews")]
         public IActionResult GetInterviews()
         {
@@ -120,17 +114,7 @@ namespace SuiteCareers.Controllers
 
         }
 
-        [HttpPost("userdescription")]
-        public IActionResult Post([FromBody] UserDescription userDescription)
-        {
-            //Tests for an invalid ModelState -> return BadRequest(); 
-            if (!ModelState.IsValid) { return BadRequest(); }
-            //Makes changes to DbContext, save to Database -> return Accepted(userDescription);
-            _db.Add(userDescription);
-            _db.SaveChanges();
-            return Accepted(userDescription);
-
-        }
+       
 
 
         /**
@@ -192,16 +176,6 @@ namespace SuiteCareers.Controllers
             return Accepted();
         }
 
-        [HttpDelete("userdescription/{id}")]
-        public ActionResult DeleteUserDescription(long id)
-        {
-            //Searchs for record using Any(); if missing -> return NotFound();
-            if (!_db.UserDescriptions.Any(u => u.DescriptionId == id)) { return NotFound(); }
-            //Removes the writer with the given id
-            _db.Remove(new UserDescription { DescriptionId = id });
-            _db.SaveChanges();
-            return Accepted();
-        }
 
 
         //[HttpPut("user/{id}")]
@@ -346,57 +320,6 @@ namespace SuiteCareers.Controllers
                     var convertedValue = JsonSerializer.Deserialize(jsonString, prop.ClrType);
 
                     User.GetType().GetProperty(propName)?.SetValue(User, convertedValue);
-
-                }
-            }
-
-            // Save the changes to the database
-            _db.Update(User);
-            _db.SaveChanges();
-
-            // Return the updated entity
-            return Accepted(entity);
-        }
-
-        [HttpPut("userdescription/{id}")]
-        public IActionResult Put(long id, [FromBody] JsonElement updateJson)
-        {
-            // Get the entity type for the model name
-            var entityType = _db.Model.FindEntityType($"SuiteCareers.Models.UserDescription");
-
-            // If the entity type doesn't exist, return NotFound
-            if (entityType == null)
-            {
-                return NotFound();
-            }
-
-            // Get the entity instance with the specified ID
-            var entity = _db.Find(entityType.ClrType, id);
-
-            // If the entity instance doesn't exist, return NotFound
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
-            // Parse the JSON update object into a dictionary
-            var updateDict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(updateJson.GetRawText());
-
-
-            UserDescription UserDescription = (UserDescription)entity;
-            // Iterate through the properties of the entity type
-            foreach (var prop in entityType.GetProperties())
-            {
-                string propName = char.ToUpper(prop.Name[0]) + prop.Name.Substring(1);
-
-                // If the property name is in the update dictionary, update the entity property
-                if (updateDict.TryGetValue(prop.Name, out JsonElement propValue))
-                {
-
-                    var jsonString = propValue.GetRawText();
-                    var convertedValue = JsonSerializer.Deserialize(jsonString, prop.ClrType);
-
-                    User.GetType().GetProperty(prop.Name)?.SetValue(User, convertedValue);
 
                 }
             }

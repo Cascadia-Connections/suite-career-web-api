@@ -8,12 +8,13 @@ namespace SuiteCareers.Models
         [Key]
         public long SessionId { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime StartDate { get; set; }
         public long UserId { get; set; }
         public long InterviewId { get; set; }
         public Interview? Interview { get; set; }
         public User? User { get; set; }
-
+        public bool ActivityStatus { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Bogus;
+using Bogus.DataSets;
 using System.Threading.Tasks;
 using SuiteCareers.Models;
 using SuiteCareers.Data;
@@ -10,6 +11,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SuiteCareers.DbSetup
 {
+    public enum EducationLevels
+    {
+        MiddleSchool,
+        HighSchool,
+        Undergraduate,
+        Graduate,
+        Doctorate
+    }
+    public enum Interests
+    {
+        Math,
+        ComputerProgramming,
+        Photography,
+        Economics,
+        Banking
+    }
     internal class SeedData
     {
         internal static void Initialize(SuiteCareersDbContext dbContext)
@@ -17,7 +34,6 @@ namespace SuiteCareers.DbSetup
             ArgumentNullException.ThrowIfNull(dbContext, nameof(dbContext));
             //dbContext.Database.EnsureCreated(); // No longer forcing DB creation on app start; following Migrations instead
             if (dbContext.Users.Any()) return;
-            if (dbContext.UserDescriptions.Any()) return;
             if (dbContext.Interviews.Any()) return;
             if (dbContext.Questions.Any()) return;
             if (dbContext.Responses.Any()) return;
@@ -35,31 +51,29 @@ namespace SuiteCareers.DbSetup
             Randomizer.Seed = new Random(Guid.NewGuid().GetHashCode());
             var userIndex = 0;
             var emailIndex = 0;
-            
+
             //Users
-            var testUsers = new Faker<User>()
-                .RuleFor(u => u.FirstName, f => firstNames[userIndex++])
-                .RuleFor(u => u.LastName, f => f.PickRandom(lastNames))
-                .RuleFor(u => u.Email, f => emails[emailIndex++])
-                .RuleFor(u => u.City, f => f.PickRandom(cities))
-                .RuleFor(u => u.State, f => f.PickRandom(states));
-            var users = testUsers.Generate(45); // TODO: B) create a collection of 45 users
-                                                //UserDescriptions
-            var usersIndex = 0;
+            var areasOfImprovement = new[] { "Online Interviews", "Over the Phone Interviews", "In Person Interviews" };
+            var educationSpecifics = new[] { "Accounting", "Biology", "Chemistry", "Computer Science", "Dance", "Economics", "Education", "Engineering", "English", "Environmental Science", "Finance", "Graphic Design", "History", "International Relations", "Journalism", "Linguistics", "Marketing", "Mathematics", "Music", "Nursing", "Philosophy", "Physics", "Political Science", "Psychology", "Sociology", "Statistics", "Theater", "Anthropology", "Art History", "Astrophysics", "Biochemistry", "Business Administration", "Criminal Justice", "Digital Media", "Electrical Engineering", "Fashion Design", "Film Studies", "Geology", "Hospitality Management", "Information Technology", "Interior Design", "Kinesiology", "Management", "Mechanical Engineering", "Medical Science", "Neuroscience", "Photography", "Public Health", "Urban Planning" };
             var educationLevels = new[] { "Primary School", "Secondary School", "High School Diploma", "Associate's Degree", "Bachelor's Degree", "Master's Degree", "Doctoral Degree", "Professional Degree" };
             var jobs = new[] { "Accountant", "Actor", "Architect", "Artist", "Athlete", "Attorney", "Author", "Baker", "Banker", "Barber", "Bartender", "Chef", "Clergy", "Coach", "Computer Programmer", "Consultant", "Dancer", "Dentist", "Designer", "Detective", "Doctor", "Electrician", "Engineer", "Entrepreneur", "Farmer", "Fashion Designer", "Firefighter", "Fisherman", "Flight Attendant", "Freelancer", "Gardener", "Graphic Designer", "Hair Stylist", "Hotel Manager", "Human Resources Manager", "Interior Designer", "Journalist", "Judge", "Lawyer", "Librarian", "Lifeguard", "Mechanic", "Medical Assistant", "Musician", "Nurse", "Optometrist", "Paramedic", "Pharmacist", "Photographer", "Physician Assistant", "Pilot", "Plumber", "Police Officer", "Professor", "Psychiatrist", "Psychologist", "Real Estate Agent", "Receptionist", "Salesperson", "Scientist", "Social Media Manager", "Social Worker", "Software Developer", "Teacher", "Technical Writer", "Tour Guide", "Translator", "Travel Agent", "Truck Driver", "Veterinarian", "Video Game Designer", "Web Developer", "Writer", "Yoga Instructor", "YouTuber", "Zookeeper" };
-
-
-            var testDescriptions = new Faker<UserDescription>()
-                .RuleFor(u => u.Date, (faker, d) =>
+            var testUsers = new Faker<User>()
+               .RuleFor(u => u.FirstName, f => firstNames[userIndex++])
+               .RuleFor(u => u.LastName, f => f.PickRandom(lastNames))
+               .RuleFor(u => u.Email, f => emails[emailIndex++])
+               .RuleFor(u => u.City, f => f.PickRandom(cities))
+               .RuleFor(u => u.State, f => f.PickRandom(states))
+               .RuleFor(u => u.EducationLevel, e => e.PickRandom(educationLevels))
+               .RuleFor(u => u.EducationSpecifics, e => e.PickRandom(educationSpecifics) + ", " + e.PickRandom(educationSpecifics))
+               .RuleFor(u => u.Interests, i => i.PickRandom(jobs) + ", " + i.PickRandom(jobs))
+               .RuleFor(u => u.ActivityStatus, s => s.Random.Bool())
+               .RuleFor(u => u.UserJob, j => j.PickRandom(jobs))
+               .RuleFor(u => u.YearsOfExperience, y => y.Random.Int(1,50))
+               .RuleFor(u => u.CreateDate, (faker, d) =>
         faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today))
-                .RuleFor(u => u.UserId, ui => usersIndex)
-                .RuleFor(u => u.User, ui => users[usersIndex++])
-                .RuleFor(u => u.EducationLevel, e => e.PickRandom(educationLevels))
-                .RuleFor(u => u.UserJob, uj => uj.PickRandom(jobs))
-                .RuleFor(u => u.WorkExperience, w => w.PickRandom(jobs));
+               .RuleFor(u => u.AreaOfImprovement, a => a.PickRandom(areasOfImprovement));
+            var users = testUsers.Generate(45);
 
-            var userDescriptions = testDescriptions.Generate(45);
 
             var interviewNames = new[] { "Software Engineer", "Marketing Manager", "Sales Associate", "Data Analyst", "Graphic Designer", "Product Manager", "Human Resources Coordinator", "Financial Analyst", "Customer Service Representative", "Operations Manager", "Project Manager", "Business Analyst", "IT Manager", "Web Developer", "Account Manager", "Social Media Manager", "Content Writer", "UX Designer", "Account Executive", "Executive Assistant", "Public Relations Specialist", "Quality Assurance Engineer", "Digital Marketing Specialist", "Event Coordinator", "Technical Writer", "Business Development Manager", "Data Scientist", "Art Director", "Administrative Assistant", "Customer Success Manager", "Supply Chain Manager", "HR Manager", "Frontend Developer", "DevOps Engineer", "Copywriter", "Mobile Developer", "Brand Manager", "Product Marketing Manager", "Sales Manager", "Operations Coordinator", "Marketing Coordinator", "Database Administrator", "Financial Advisor", "UI Designer", "Network Administrator", "Systems Engineer", "Medical Assistant", "Registered Nurse", "Pharmacist", "Physical Therapist", "Dental Hygienist", "Radiologic Technologist", "Physician Assistant", "Occupational Therapist", "Speech-Language Pathologist", "Clinical Laboratory Technician", "Diagnostic Medical Sonographer", "Health Services Manager", "Medical and Health Services Researcher", "Software Developer", "Mechanical Engineer", "Civil Engineer", "Electrical Engineer", "Chemical Engineer", "Aerospace Engineer", "Biomedical Engineer", "Environmental Engineer", "Petroleum Engineer", "Materials Scientist", "Industrial Designer", "Interior Designer", "Animator", "Video Editor", "Photographer", "Film Director", "Sound Designer", "Game Designer", "Game Developer", "Technical Artist", "Artificial Intelligence Engineer", "Machine Learning Engineer", "Robotics Engineer", "Cybersecurity Analyst", "Network Security Engineer", "Ethical Hacker", "Forensic Computer Analyst", "IT Auditor", "Technical Support Specialist", "Help Desk Technician" };
             var interviewIndex = 0;
@@ -85,12 +99,11 @@ namespace SuiteCareers.DbSetup
             var testSessions = new Faker<Session>()
                 .RuleFor(s => s.Interview, f => f.PickRandom(interviews))
                 .RuleFor(s => s.User, f => f.PickRandom(users))
-                .RuleFor(s => s.Date, (faker, d) =>
+                .RuleFor(s => s.StartDate, (faker, d) =>
         faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today));
             var sessions = testSessions.Generate(100);
 
             dbContext.Users.AddRange(users);
-            dbContext.UserDescriptions.AddRange(userDescriptions);
             dbContext.Interviews.AddRange(interviews);
             dbContext.Questions.AddRange(allQuestions);
             dbContext.Responses.AddRange(allResponses);

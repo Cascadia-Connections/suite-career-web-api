@@ -11,6 +11,9 @@ namespace SuiteCareers.Models
         public string? QuestionContent { get; set; }
         public long InterviewId { get; set; }
         public Interview? Interview { get; set; }
+        public bool UserGenerated { get; set; }
+        public int AnswerCount { get; set; }
+
     }
 }
 
