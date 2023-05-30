@@ -7,9 +7,8 @@ namespace SuiteCareers.Models
     {
         [Key]
         public long InterviewId { get; set; }
-        public string InterviewName { get; set; }
-        [Required]
-        public ICollection<Question> Questions { get; set; }
+        public string? InterviewName { get; set; }
+        public ICollection<Question>? Questions { get; set; }
 
     }
 }
