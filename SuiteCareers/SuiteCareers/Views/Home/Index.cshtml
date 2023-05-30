@@ -15,6 +15,7 @@
             <div class="col-auto">
                 <span>Filter by Date:</span>
             </div>
+            <form method="get" asp-action="DashboardFilter" asp-controller="HomeController">
             <div class="col-auto">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -32,8 +33,9 @@
                 </div>
             </div>
             <div class="col-auto">
-                <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+                <button id="filter" type="submit" class="btn btn-primary" action="DashboardFilter()">Filter</button>
             </div>
+            </form>
         </div>
 
         <div class="row">
