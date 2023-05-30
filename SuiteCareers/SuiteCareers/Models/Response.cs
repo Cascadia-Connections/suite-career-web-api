@@ -7,9 +7,9 @@ namespace SuiteCareers.Models
     {
         [Key]
         public long ResponseId { get; set; }
-        public string UserResponse { get; set; }
+        public string? UserResponse { get; set; }
 
-        public int QuestionId { get; set; }
+        public long QuestionId { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ using SuiteCareers.Data;
 using System.Text.Json;
 using System.Buffers;
 using System.Globalization;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore;
 
@@ -226,159 +227,217 @@ namespace SuiteCareers.Controllers
         }
 
 
-
-        //[HttpPut("user/{id}")]
-        //public ActionResult PutUser(long id, [FromBody] User user)
-        //{
-        //    // Tests for missing record (bad ID value)
-        //    if (!_db.Users.Any(u => u.UserId == id))
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    // Retrieve the user from the database
-        //    User tempUser = _db.Users.Single(u => u.UserId == id);
-
-        //    // Update the user properties with the values from the request body, if present
-        //    if (user.FirstName != null)
-        //    {
-        //        tempUser.FirstName = user.FirstName;
-        //    }
-        //    if (user.LastName != null)
-        //    {
-        //        tempUser.LastName = user.LastName;
-        //    }
-        //    if (user.Email != null)
-        //    {
-        //        tempUser.Email = user.Email;
-        //    }
-        //    if (user.City != null)
-        //    {
-        //        tempUser.City = user.City;
-        //    }
-        //    if (user.State != null)
-        //    {
-        //        tempUser.State = user.State;
-        //    }
-
-        //    _db.Update(tempUser);
-        //    // Save the changes to the database
-        //    _db.SaveChanges();
-
-        //    // Return the updated user
-        //    return Accepted(tempUser);
-        //}
-
-        //[HttpPut("interview/{id}")]
-        //public ActionResult PutInterview(long id, [FromBody] Interview interview)
-        //{
-        //    //Test for invalid Model
-        //    if (!ModelState.IsValid) { return BadRequest(); }
-
-        //    //Tests for missing record (bad ID value)
-        //    if (!_db.Interviews.Any(u => u.InterviewId == id)) { return NotFound(); }
-        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
-        //    interview.InterviewId = id;
-        //    _db.Update(interview);
-        //    _db.SaveChanges();
-        //    return Accepted(interview);
-        //}
-
-        //[HttpPut("question/{id}")]
-        //public ActionResult PutQuestion(long id, [FromBody] Question question)
-        //{
-        //    //Test for invalid Model
-        //    if (!ModelState.IsValid) { return BadRequest(); }
-
-        //    //Tests for missing record (bad ID value)
-        //    if (!_db.Questions.Any(u => u.QuestionId == id)) { return NotFound(); }
-        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
-        //    question.QuestionId = id;
-        //    _db.Update(question);
-        //    _db.SaveChanges();
-        //    return Accepted(question);
-        //}
-
-        //[HttpPut("response/{id}")]
-        //public ActionResult PutResponse(long id, [FromBody] Response response)
-        //{
-        //    //Test for invalid Model
-        //    if (!ModelState.IsValid) { return BadRequest(); }
-
-        //    //Tests for missing record (bad ID value)
-        //    if (!_db.Responses.Any(u => u.ResponseId == id)) { return NotFound(); }
-        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
-        //    response.ResponseId = id;
-        //    _db.Update(response);
-        //    _db.SaveChanges();
-        //    return Accepted(response);
-        //}
-        //[HttpPut("session/{id}")]
-        //public ActionResult PutSession(long id, [FromBody] Session session)
-        //{
-        //    //Test for invalid Model
-        //    if (!ModelState.IsValid) { return BadRequest(); }
-
-        //    //Tests for missing record (bad ID value)
-        //    if (!_db.Sessions.Any(u => u.SessionId == id)) { return NotFound(); }
-        //    //Makes changes to DbContext, save to Database -> return Accepted(writer);
-        //    session.SessionId = id;
-        //    _db.Update(session);
-        //    _db.SaveChanges();
-        //    return Accepted(session);
-        //}
-
-
-
-        [HttpPut("user/{id}")]
-        public IActionResult PutUser(long id, [FromBody] JsonElement updateJson)
+        [HttpPut("user/{userId}")]
+        public IActionResult UpdateUser(long userId, [FromBody] User updatedUser)
         {
-            // Get the entity type for the model name
-            var entityType = _db.Model.FindEntityType($"SuiteCareers.Models.User");
+            // Check if the provided user ID matches the updatedUser.UserId
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+                if (userId != updatedUser.UserId)
+            {
+                return BadRequest("User ID mismatch");
+            }
 
-            // If the entity type doesn't exist, return NotFound
-            if (entityType == null)
+            // TODO: Implement your logic to update the user in the database
+            var existingUser = _db.Users.FirstOrDefault(u => u.UserId == userId);
+            if (existingUser == null)
             {
                 return NotFound();
             }
 
-            // Get the entity instance with the specified ID
-            var entity = _db.Find(entityType.ClrType, id);
+            var properties = typeof(User).GetProperties();
 
-            // If the entity instance doesn't exist, return NotFound
-            if (entity == null)
+            foreach (var property in properties)
             {
-                return NotFound();
-            }
+                var updatedValue = property.GetValue(updatedUser);
 
-            // Parse the JSON update object into a dictionary
-            var updateDict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(updateJson.GetRawText());
-            
-
-            User User = (User)entity;
-            // Iterate through the properties of the entity type
-            foreach (var prop in entityType.GetProperties())
-            {
-                string propName = char.ToUpper(prop.Name[0]) + prop.Name.Substring(1);
-                
-                // If the property name is in the update dictionary, update the entity property
-                if (updateDict.TryGetValue(propName, out JsonElement propValue))
+                // Check if the updatedValue is not null or empty
+                if (updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
                 {
-
-                    var jsonString = propValue.GetRawText();
-                    var convertedValue = JsonSerializer.Deserialize(jsonString, prop.ClrType);
-
-                    User.GetType().GetProperty(propName)?.SetValue(User, convertedValue);
-
+                    property.SetValue(existingUser, updatedValue);
                 }
             }
 
-            // Save the changes to the database
-            _db.Update(User);
+            // TODO: Save changes to the database
+            _db.Update(existingUser);
             _db.SaveChanges();
 
-            // Return the updated entity
-            return Accepted(entity);
+            // Return a success response
+            return Accepted(existingUser);
+        }
+
+        [HttpPut("session/{sessionId}")]
+        public IActionResult UpdateSession(long sessionId, [FromBody] Session updatedSession)
+        {
+            // Check if the provided user ID matches the updatedUser.UserId
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if (sessionId != updatedSession.SessionId)
+            {
+                return BadRequest("Session ID mismatch");
+            }
+
+            // TODO: Implement your logic to update the user in the database
+            var existingSession = _db.Sessions.FirstOrDefault(s => s.SessionId == sessionId);
+            if (existingSession == null)
+            {
+                return NotFound();
+            }
+
+            var properties = typeof(Session).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var updatedValue = property.GetValue(updatedSession);
+
+                // Check if the updatedValue is not null or empty
+                if ( updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
+                {
+                    if (property.PropertyType != typeof(long) || (property.PropertyType == typeof(long) && (long)updatedValue != 0))
+                    {
+                        property.SetValue(existingSession, updatedValue);
+                    }
+                 
+                }
+            }
+
+            // TODO: Save changes to the database
+            _db.Update(existingSession);
+            _db.SaveChanges();
+
+            // Return a success response
+            return Accepted(existingSession);
+        }
+
+        [HttpPut("question/{questionId}")]
+        public IActionResult UpdateQuestion(int questionId, [FromBody] Question updatedQuestion)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            // Check if the provided question ID matches the updatedQuestion.QuestionId
+            if (questionId != updatedQuestion.QuestionId)
+            {
+                return BadRequest("Question ID mismatch");
+            }
+
+            // TODO: Implement your logic to update the question in the database
+            var existingQuestion = _db.Questions.FirstOrDefault(q => q.QuestionId == questionId);
+            if (existingQuestion == null)
+            {
+                return NotFound();
+            }
+
+            var properties = typeof(Question).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var updatedValue = property.GetValue(updatedQuestion);
+
+                // Check if the updatedValue is not null or empty
+                if (updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
+                {
+                    // Check if the updatedValue is not a long with value 0
+                    if (property.PropertyType != typeof(long) || (property.PropertyType == typeof(long) && (long)updatedValue != 0))
+                    {
+                        property.SetValue(existingQuestion, updatedValue);
+                    }
+                }
+            }
+
+            // TODO: Save changes to the database
+            _db.Update(existingQuestion);
+            _db.SaveChanges();
+
+            // Return a success response
+            return Accepted(existingQuestion);
+        }
+
+        [HttpPut("response/{responseId}")]
+        public IActionResult UpdateResponse(int responseId, [FromBody] Response updatedResponse)
+        {
+            // Check if the provided response ID matches the updatedResponse.ResponseId
+            if (responseId != updatedResponse.ResponseId)
+            {
+                return BadRequest("Response ID mismatch");
+            }
+
+            // TODO: Implement your logic to update the response in the database
+            var existingResponse = _db.Responses.FirstOrDefault(r => r.ResponseId == responseId);
+            if (existingResponse == null)
+            {
+                return NotFound();
+            }
+
+            var properties = typeof(Response).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var updatedValue = property.GetValue(updatedResponse);
+
+                // Check if the updatedValue is not null or empty
+                if (updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
+                {
+                    // Check if the updatedValue is not a long with value 0
+                    if (property.PropertyType != typeof(long) || (property.PropertyType == typeof(long) && (long)updatedValue != 0))
+                    {
+                        property.SetValue(existingResponse, updatedValue);
+                    }
+                }
+            }
+
+            // TODO: Save changes to the database
+            _db.Update(existingResponse);
+            _db.SaveChanges();
+
+            // Return a success response
+            return Accepted(existingResponse);
+        }
+
+        [HttpPut("interview/{interviewId}")]
+        public IActionResult UpdateInterview(int interviewId, [FromBody] Interview updatedInterview)
+        {
+            // Check if the provided interview ID matches the updatedInterview.InterviewId
+            if (interviewId != updatedInterview.InterviewId)
+            {
+                return BadRequest("Interview ID mismatch");
+            }
+
+            // TODO: Implement your logic to update the interview in the database
+            var existingInterview = _db.Interviews.FirstOrDefault(i => i.InterviewId == interviewId);
+            if (existingInterview == null)
+            {
+                return NotFound();
+            }
+
+            var properties = typeof(Interview).GetProperties();
+
+            foreach (var property in properties)
+            {
+                var updatedValue = property.GetValue(updatedInterview);
+
+                // Check if the updatedValue is not null or empty
+                if (updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
+                {
+                    // Check if the updatedValue is not a long with value 0
+                    if (property.PropertyType != typeof(long) || (property.PropertyType == typeof(long) && (long)updatedValue != 0))
+                    {
+                        property.SetValue(existingInterview, updatedValue);
+                    }
+                }
+            }
+
+            // TODO: Save changes to the database
+            _db.Update(existingInterview);
+            _db.SaveChanges();
+
+            // Return a success response
+            return Accepted(existingInterview);
         }
 
     }
