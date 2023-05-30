@@ -15,27 +15,25 @@
             <div class="col-auto">
                 <span>Filter by Date:</span>
             </div>
-            <form method="get" asp-action="DashboardFilter" asp-controller="HomeController">
+            @*<form method="get" asp-action="DashboardFilter" asp-controller="HomeController">*@
             <div class="col-auto">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">From Date</span>
                     </div>
-                    <input type="date" class="form-control" id="from-date" name="start" value="@((Model.Start != null) ? Model.Start.Value.ToString("yyyy-MM-dd") : string.Empty)">
-                </div>
+                <input type="date" class="form-control" id="from-date" name="from-date">                </div>
             </div>
             <div class="col-auto">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">To Date</span>
                     </div>
-                    <input type="date" class="form-control" id="to-date" name="end" value="@((Model.End != null) ? Model.End.Value.ToString("yyyy-MM-dd") : string.Empty)">
-                </div>
+                    <input type="date" class="form-control" id="to-date" name="to-date">                </div>
             </div>
             <div class="col-auto">
                 <button id="filter" type="submit" class="btn btn-primary" action="DashboardFilter()">Filter</button>
             </div>
-            </form>
+            @*</form>*@
         </div>
 
         <div class="row">
@@ -77,7 +75,7 @@
             <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
                 <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
                     <div class="top-text align-self-center">New Questions</div>
-                    <div class="bottom-text align-self-center">Placeholder</div>
+                    <div class="bottom-text align-self-center">@Model.NewQuestions</div>
                 </div>
             </div>
         </div>
@@ -99,7 +97,7 @@
                 <div class="col-sm-6">
                     <div class="card activeSessions">
                     <div class="card-body">
-                            <p class="my-1 text-center">Active Sessions: <span style="font-weight: bold; font-size: large"></span>Placeholder</p>
+                            <p class="my-1 text-center">Active Sessions: <span style="font-weight: bold; font-size: large"></span>@Model.ActiveSessions</p>
                        </div>
                     </div>
                    </div>
@@ -110,7 +108,7 @@
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex justify-content-between pe-4">
                         <p class="fw-bold fs-5">Recent Sessions</p>
-                        <a href="/Sessions.cshtml" class="link-secondary">View All</a>
+                        <a asp-controller="HomeController" asp-action="Sessions">View All</a>
                     </div>
                     <div class="flex-fill d-flex">
                         <table class="table table-hover flex-fill mb-0">
@@ -129,10 +127,10 @@
                                        @recentSession.User.FirstName @recentSession.User.LastName
                                      </td>
                                      <td scope="row">
-                                        @recentSession.Date
+                                        @recentSession.EndDate
                                      </td>
                                      <td scope="row">
-                                       @*Session length data*@
+                                       @(recentSession.EndDate - recentSession.StartDate)
                                      </td>
                                 </tr>
                                 }
@@ -150,14 +148,14 @@
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex justify-content-between pe-4">
                         <p class="fw-bold fs-5">Top Questions</p>
-                        <a href="/Questions" class="link-secondary">View All</a>
+                        <a asp-controller="Home" asp-action="Questions">View All</a>
                     </div>
                     <div class="flex-fill d-flex">
                         <table class="table table-hover flex-fill mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">Question</th>
-                                    <th scope="col">Type</th>
+                                    <th scope="col">User Generated</th>
                                     <th scope="col">Sessions</th>
                                 </tr>
                             </thead>
@@ -169,10 +167,10 @@
                                         @topQuestions.QuestionContent
                                 </td>
                                 <td scope="row">
-                                        @*@topQuestions.Type*@
+                                        @topQuestions.UserGenerated
                                 </td>
                                 <td scope="row">
-                                        @*@topQuestions.TimesAnswered*@
+                                        @*@topQuestions.ResponseID*@
                                 </td>
                                     </tr>
                                 }

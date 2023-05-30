@@ -4,6 +4,7 @@ using SuiteCareers.Models;
 using SuiteCareers.Data;
 using Microsoft.EntityFrameworkCore;
 using SuiteCareers.ViewModels;
+using System.TimeSpan;
 
 namespace SuiteCareers.Controllers;
 
@@ -20,21 +21,31 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-
+        var AverageSessionLength = _db.Sessions.Where(b => b.EndDate != null)
+                                                .Average(b => b.EndDate - b.StartDate);
         var dashboardVM = new ViewModels.DashboardVM
         {
-            NewUser = _db.UserDescriptions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),
+            /*SnapshotBar*/
+            NewUser = _db.Users.Where(b => b.CreateDate >= DateTime.Today.AddDays(-7)).Count(),
             TotalUsers = _db.Users.Count(),
-            /*AvgSessionLength = */
+            AvgSessionLength = _db.Sessions.Where(b => b.EndDate != null)
+                                    .Average(b => (b.EndDate! - b.StartDate)!
+                                    .TotalMinutes),
             TotalSessions = _db.Sessions.Count(),
-            /*QuestionsAnswered =*/
-            /*NewQuestions = _db.Questions.Where(b => b.Date >= DateTime.Today.AddDays(-7)).Count(),*/
+            QuestionsAnswered = _db.Responses.Count(),
+            NewQuestions = _db.Questions.Where(b => b.CreateDate >= DateTime.Today.AddDays(-7)).Count(),
 
+            /*ActiveUsers Info*/
             /*ActiveUsers =*/
-            /*ActiveSessions = */
-            
-            RecentSessions = _db.Sessions.Include(b => b.User).OrderByDescending(b => b.Date).Take(5).ToList(),
-            TopQuestions = _db.Questions.OrderByDescending(b => b.QuestionId).Take(5).ToList() /*Need to change what this is Ordered by once the DB us updated*/
+            ActiveSessions = _db.Sessions.Count(b => b.EndDate == null),
+
+            /*Tables*/
+            RecentSessions = _db.Sessions.Include(b => b.User).OrderByDescending(b => b.EndDate).Take(5).ToList(),
+
+            TopQuestions = _db.Questions.Include(b => b.Responses)                              
+                                .OrderByDescending(b => b.Responses.Count())
+                                .Take(5)
+                                .ToList(),
 
         };
         
@@ -44,7 +55,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult DashboardFilter(DashboardVM dashboardVM) { 
             
-            return View();
+            return View(dashboardVM);
     }
 
     public IActionResult Questions()

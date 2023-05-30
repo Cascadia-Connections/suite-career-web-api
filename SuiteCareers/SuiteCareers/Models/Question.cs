@@ -13,6 +13,10 @@ namespace SuiteCareers.Models
         public Interview? Interview { get; set; }
         public bool? UserGenerated { get; set; }
 
+        public DateTime CreateDate { get; set; }
+
+        public IEnumerable<Response> Responses { get; set; }
+
     }
 }
 
