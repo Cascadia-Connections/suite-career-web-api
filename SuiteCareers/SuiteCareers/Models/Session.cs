@@ -13,7 +13,6 @@ namespace SuiteCareers.Models
         public long InterviewId { get; set; }
         public Interview? Interview { get; set; }
         public User? User { get; set; }
-        public bool ActivityStatus { get; set; }
         public DateTime EndDate { get; set; }
     }
 }

@@ -31,6 +31,11 @@ namespace SuiteCareers.Controllers
 
             return Ok(_db.Users);
         }
+        [HttpGet("users/{id}")]
+        public IActionResult GetUser(long id)
+        {
+            return Ok(_db.Users.Single(u => u.UserId == id));
+        }
 
         [HttpGet("interviews")]
         public IActionResult GetInterviews()
@@ -38,20 +43,64 @@ namespace SuiteCareers.Controllers
             return Ok(_db.Interviews);
         }
 
+        [HttpGet("interviews/{id}")]
+        public IActionResult GetInterview(long id)
+        {
+            return Ok(_db.Interviews.Single(i => i.InterviewId == id));
+        }
+
         [HttpGet("questions")]
         public IActionResult GetQuestions()
         {
             return Ok(_db.Questions);
         }
+
+        [HttpGet("questions/{id}")]
+        public IActionResult GetQuestion(long id)
+        {
+            return Ok(_db.Questions.Single(q => q.QuestionId == id));
+        }
+
+        [HttpGet("questions/interview/{id}")]
+        public IActionResult GetQuestionsFromInterview(long id)
+        {
+            return Ok(_db.Questions.Where(q => q.InterviewId == id));
+        }
+
         [HttpGet("responses")]
         public IActionResult GetResponses()
         {
             return Ok(_db.Responses);
         }
+
+        [HttpGet("responses/{id}")]
+        public IActionResult GetResponse(long id)
+        {
+            return Ok(_db.Responses.Single(r => r.ResponseId == id));
+        }
+
+        [HttpGet("responses/question/{id}")]
+        public IActionResult GetResponsesForQuestion(long id)
+        {
+            return Ok(_db.Responses.Where(r => r.QuestionId == id));
+        }
+
         [HttpGet("sessions")]
         public IActionResult GetSessions()
         {
             return Ok(_db.Sessions);
+        }
+
+        [HttpGet("sessions/{id}")]
+        public IActionResult GetSession(long id)
+        {
+            return Ok(_db.Sessions.Single(s => s.SessionId == id));
+        }
+
+        [HttpGet("sessions/user/{id}")]
+        public IActionResult GetSessionsOfUser(long id)
+        {
+            return Ok(_db.Sessions.Where(s => s.UserId == id));
         }
 
         [HttpPost("user")]
