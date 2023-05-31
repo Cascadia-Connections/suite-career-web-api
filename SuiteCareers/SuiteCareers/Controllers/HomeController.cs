@@ -4,7 +4,7 @@ using SuiteCareers.Models;
 using SuiteCareers.Data;
 using Microsoft.EntityFrameworkCore;
 using SuiteCareers.ViewModels;
-using System.TimeSpan;
+using System.Linq;
 
 namespace SuiteCareers.Controllers;
 
@@ -21,28 +21,39 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        var AverageSessionLength = _db.Sessions.Where(b => b.EndDate != null)
-                                                .Average(b => b.EndDate - b.StartDate);
         var dashboardVM = new ViewModels.DashboardVM
         {
             /*SnapshotBar*/
-            NewUser = _db.Users.Where(b => b.CreateDate >= DateTime.Today.AddDays(-7)).Count(),
+            NewUser = _db.Users.Where(b => b.CreateDate >= DateTime.Today.AddDays(-7))
+                               .Count(),
             TotalUsers = _db.Users.Count(),
-            AvgSessionLength = _db.Sessions.Where(b => b.EndDate != null)
-                                    .Average(b => (b.EndDate! - b.StartDate)!
-                                    .TotalMinutes),
-            TotalSessions = _db.Sessions.Count(),
-            QuestionsAnswered = _db.Responses.Count(),
-            NewQuestions = _db.Questions.Where(b => b.CreateDate >= DateTime.Today.AddDays(-7)).Count(),
+            AvgSessionLength = _db.Sessions
+                                .Where(b => b.EndDate.HasValue)
+                                .ToList()
+                                .Average(b => (b.EndDate.Value - b.StartDate).TotalMinutes),
+            TotalSessions = _db.Sessions
+                                .Count(),
+            QuestionsAnswered = _db.Responses
+                                .Count(),
+            NewQuestions = _db.Questions
+                                .Where(b => b.CreateDate >= DateTime.Today.AddDays(-7))
+                                .Count(),
 
             /*ActiveUsers Info*/
-            /*ActiveUsers =*/
-            ActiveSessions = _db.Sessions.Count(b => b.EndDate == null),
+            ActiveUsers = _db.Users
+                                .Count(b => b.ActivityStatus == true),
+            ActiveSessions = _db.Sessions
+                                .Count(b => b.EndDate == null),
 
             /*Tables*/
-            RecentSessions = _db.Sessions.Include(b => b.User).OrderByDescending(b => b.EndDate).Take(5).ToList(),
+            RecentSessions = _db.Sessions
+                                .Include(b => b.User)
+                                .OrderByDescending(b => b.EndDate)
+                                .Take(5)
+                                .ToList(),
 
-            TopQuestions = _db.Questions.Include(b => b.Responses)                              
+            TopQuestions = _db.Questions
+                                .Include(b => b.Responses)                              
                                 .OrderByDescending(b => b.Responses.Count())
                                 .Take(5)
                                 .ToList(),
