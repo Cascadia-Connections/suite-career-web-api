@@ -80,3 +80,10 @@ a, .page-link {
         width: 100%;
     }
 }
+}
+
+/* Users Page Styles */
+
+.user-date-filter {
+    margin-top: 10px;
+}

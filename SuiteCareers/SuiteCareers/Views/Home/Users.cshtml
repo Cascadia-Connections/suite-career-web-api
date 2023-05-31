@@ -2,4 +2,141 @@
     ViewData["Title"] = "Users";
     Layout = "_Layout";
 }
-<h1>@ViewData["Title"]</h1>
+
+<div style="height: 100%">
+
+    <!-- Date Filter For User Analytics -->
+    <div class="container-fluid user-date-filter">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center">
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <span>Filter by Date:</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">From Date</span>
+                            </div>
+                            <input type="date" class="form-control" id="from-date" name="from-date">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">To Date</span>
+                            </div>
+                            <input type="date" class="form-control" id="to-date" name="to-date">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Daily Users -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 mx-auto mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title text-center fs-5 fw-bold">Daily Users</h1>
+                        <p class="card-text text-center">241</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Users By Country -->
+            <div class="col-md-6 mx-auto mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title text-center fs-5 fw-bold">New Users By Country</h1>
+                        <div class="table-responsive">
+                            <table class="table table-hover" style="border: none; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">United States</th>
+                                        <th scope="col">Canada</th>
+                                        <th scope="col">United Kingdom</th>
+                                        <th scope="col">Australia</th>
+                                        <th scope="col">France</th>
+                                        <th scope="col">Mexico</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row" id="Us">130</td>
+                                        <td id="Ca">51</td>
+                                        <td id="Uk">21</td>
+                                        <td id="Aus">10</td>
+                                        <td id="Fa">09</td>
+                                        <td id="Mx">12</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Users Education Level -->
+        <div class="row">
+            <div class="col-md-6 mx-auto mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title text-center fs-5 fw-bold">User Education Level</h1>
+                        <div class="table-responsive">
+                            <table class="table table-hover" style="border: none; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Highschool</th>
+                                        <th scope="col">Associates</th>
+                                        <th scope="col">Bachelors</th>
+                                        <th scope="col">Masters</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row" id="HighschoolEd">105</td>
+                                        <td id="AssociatesEd">80</td>
+                                        <td id="BachelorsEd">51</td>
+                                        <td id="MastersEd">21</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Users Employment Status -->
+            <div class="col-md-6 mx-auto mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title text-center fs-5 fw-bold">User Employment Status</h1>
+                        <div class="table-responsive">
+                            <table class="table table-hover" style="border: none; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Unemployed</th>
+                                        <th scope="col">Interviewing</th>
+                                        <th scope="col">Seeking Employment</th>
+                                        <th scope="col">Employed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row" id="Unemployed">95</td>
+                                        <td id="Interviewing">30</td>
+                                        <td id="SeekingEmployment">15</td>
+                                        <td id="Employed">101</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,16 +10,21 @@ namespace SuiteCareers.Models
         public long UserId { get; set; }
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
-        [Required(ErrorMessage = "Please enter your first name")]
+        public string? Password { get; set; }
         public string? FirstName { get; set; }
-        [Required(ErrorMessage = "Please enter your last name")]
         public string? LastName { get; set; }
-        [Required(ErrorMessage = "Please enter the city of which you live")]
         public string? City { get; set; }
-        [Required(ErrorMessage = "Please Enter the state of which you live")]
         public string? State { get; set; }
-        public UserDescription UserDescription { get; set; }
-        public ICollection<Session> Sessions { get; set; }
+        public bool? ActivityStatus { get; set; }
+        public string? UserJob { get; set; }
+        public int? YearsOfExperience { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string? EducationLevel { get; set; }
+        public string? EducationSpecifics { get; set; }
+        public string? Interests { get; set; }
+        public string? AreaOfImprovement { get; set; }
+        public ICollection<Session>? Sessions { get; set; }
+
     }
 
 }
