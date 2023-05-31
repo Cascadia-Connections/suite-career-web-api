@@ -58,12 +58,12 @@ namespace SuiteCareers.Controllers
             session.User.LastName.ToLower().StartsWith(term) ||
             session.User.FirstName.ToLower().StartsWith(term) ||
             session.SessionId.ToString().StartsWith(term)) &&
-            (!start.HasValue || session.Date >= start.Value) &&
-            (!end.HasValue || session.Date <= end.Value))
+            (!start.HasValue || session.StartDate >= start.Value) &&
+            (!end.HasValue || session.StartDate <= end.Value))
             .Select(session => new Session()
             {
                 SessionId = session.SessionId,
-                Date = session.Date,
+                StartDate = session.StartDate,
                 User = session.User
             });
 
@@ -82,16 +82,16 @@ namespace SuiteCareers.Controllers
                     sessions = sessions.OrderBy(s => s.SessionId);
                     break;
                 case "date":
-                    sessions = sessions.OrderBy(s => s.Date);
+                    sessions = sessions.OrderBy(s => s.StartDate);
                     break;
                 case "time":
-                    sessions = sessions.OrderBy(s => s.Date.TimeOfDay);
+                    sessions = sessions.OrderBy(s => s.StartDate.TimeOfDay);
                     break;
                 case "time_desc":
-                    sessions = sessions.OrderByDescending(s => s.Date.TimeOfDay);
+                    sessions = sessions.OrderByDescending(s => s.StartDate.TimeOfDay);
                     break;
                 default:
-                    sessions = sessions.OrderByDescending(s => s.Date);
+                    sessions = sessions.OrderByDescending(s => s.StartDate);
                     break;
             }
             int totalRecords = sessions.Count();
