@@ -12,6 +12,7 @@ namespace SuiteCareers.Models
         public long InterviewId { get; set; }
         public Interview? Interview { get; set; }
         public bool? UserGenerated { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         public DateTime CreateDate { get; set; }
 
