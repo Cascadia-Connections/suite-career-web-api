@@ -36,7 +36,7 @@ namespace SuiteCareers.Controllers
         {
             return View();
         }
-        /* [HttpGet]*/
+
         public IActionResult Sessions(
             string term = "",
             string orderBy = "",
@@ -64,6 +64,7 @@ namespace SuiteCareers.Controllers
             {
                 SessionId = session.SessionId,
                 StartDate = session.StartDate,
+                EndDate = session.EndDate,
                 User = session.User
             });
 

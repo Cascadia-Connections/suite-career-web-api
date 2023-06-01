@@ -92,7 +92,11 @@
                                             @session.StartDate.ToString("h:mm tt")
                                         </td>
                                         <td scope="row">
-                                            N/A
+                                            @{
+                                                TimeSpan? duration = session.EndDate - session.StartDate;
+                                                string SessionDuration = string.Format("{0:%h} hrs, {0:%m} mins, {0:%s} secs", duration);
+                                                @SessionDuration
+                                            }
                                         </td>
                                     </tr>
                                 }

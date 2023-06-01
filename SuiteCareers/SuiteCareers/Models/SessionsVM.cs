@@ -8,6 +8,7 @@ namespace SuiteCareers.Models
         public long SessionId { get; set; }
         [Required(ErrorMessage = "Please enter the date")]
         public DateTime Date { get; set; }
+        public TimeSpan Duration { get; set; }
         public ICollection<User> User { get; set; }
         public string? FirstName { get; set; }
         [Required(ErrorMessage = "Please enter your last name")]
