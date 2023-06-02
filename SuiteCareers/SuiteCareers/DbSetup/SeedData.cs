@@ -100,8 +100,8 @@ namespace SuiteCareers.DbSetup
             var allResponses = testResponses.Generate(200);
 
             var testSessions = new Faker<Session>()
-                .RuleFor(s => s.Interview, f => f.PickRandom(interviews))
-                .RuleFor(s => s.User, f => f.PickRandom(users))
+                .RuleFor(s => s.InterviewId, f => f.Random.Int(1, 50))
+                .RuleFor(s => s.UserId, f => f.Random.Int(1, 45))
                 .RuleFor(s => s.StartDate, (faker, d) =>
         faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today.AddHours(-10)))
                 .RuleFor(s => s.EndDate, (faker, d) => faker.Date.Between(d.StartDate, d.StartDate.AddHours(5)));

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SuiteCareers.Models;
 
-namespace SuiteCareers.Models
+namespace SuiteCareers.ViewModels
 {
     public class SessionsVM
     {

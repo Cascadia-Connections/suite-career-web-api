@@ -14,7 +14,7 @@ namespace SuiteCareers.Models
         public bool? UserGenerated { get; set; }
         public DateTime? CreateDate { get; set; }
 
-        public IEnumerable<Response> Responses { get; set; }
+        public ICollection<Response> Responses { get; set; }
 
     }
 }
