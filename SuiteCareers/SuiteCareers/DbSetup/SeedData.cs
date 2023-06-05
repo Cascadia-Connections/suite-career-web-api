@@ -99,20 +99,30 @@ namespace SuiteCareers.DbSetup
                 .RuleFor(r => r.QuestionId, f => f.Random.Int(1, 100));
             var allResponses = testResponses.Generate(200);
 
+            //Sessions
             var testSessions = new Faker<Session>()
-                .RuleFor(s => s.Interview, f => f.PickRandom(interviews))
-                .RuleFor(s => s.User, f => f.PickRandom(users))
+                .RuleFor(s => s.InterviewId, f => f.Random.Int(1, 50))
+                .RuleFor(s => s.UserId, f => f.Random.Int(1, 45))
                 .RuleFor(s => s.StartDate, (faker, d) =>
-        faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today.AddHours(-10)))
-                .RuleFor(s => s.EndDate, (faker, d) => faker.Date.Between(d.StartDate, d.StartDate.AddHours(5)));
+                    faker.Date.Between(DateTime.Today.AddYears(-10), DateTime.Today.AddHours(-10)))
+                .RuleFor(s => s.EndDate, (faker, d)
+                => faker.Date.Between(d.StartDate, d.StartDate.AddHours(5)).OrNull(faker)); //Added null to provide some "Active" Sessions
             var sessions = testSessions.Generate(100);
 
-            dbContext.Users.AddRange(users);
-            dbContext.Interviews.AddRange(interviews);
-            dbContext.Questions.AddRange(allQuestions);
-            dbContext.Responses.AddRange(allResponses);
-            dbContext.Sessions.AddRange(sessions);
+            //Setting up some particular values to exercise the Dashboard view
+            allQuestions[13].CreateDate = DateTime.Today.AddDays(-3);
+            users[19].CreateDate = DateTime.Today.AddDays(-1);
 
+            //Add All Fake data to the database context
+            dbContext.Users.AddRange(users);
+            dbContext.SaveChanges();
+            dbContext.Interviews.AddRange(interviews);
+            dbContext.SaveChanges();
+            dbContext.Questions.AddRange(allQuestions);
+            dbContext.SaveChanges();
+            dbContext.Responses.AddRange(allResponses);
+            dbContext.SaveChanges();
+            dbContext.Sessions.AddRange(sessions);
 
             dbContext.SaveChanges();
 

@@ -1,8 +1,12 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model SuiteCareers.ViewModels.DashboardVM
+
+@addTagHelper *, Microsoft.AstNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_Layout";
 }
+
+
 
 <div style="height: 100%">
 
@@ -12,73 +16,72 @@
             <div class="col-auto">
                 <span>Filter by Date:</span>
             </div>
+            @*<form method="get" asp-action="DashboardFilter" asp-controller="HomeController">*@
             <div class="col-auto">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">From Date</span>
                     </div>
-                    <input type="date" class="form-control" id="from-date" name="from-date">
-                </div>
+                <input type="date" class="form-control" id="from-date" name="from-date">                </div>
             </div>
             <div class="col-auto">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">To Date</span>
                     </div>
-                    <input type="date" class="form-control" id="to-date" name="to-date">
-                </div>
+                    <input type="date" class="form-control" id="to-date" name="to-date">                </div>
             </div>
             <div class="col-auto">
-                <button id="filter" type="submit" class="btn btn-primary">Filter</button>
+                <button id="filter" type="submit" class="btn btn-primary" action="DashboardFilter()">Filter</button>
             </div>
+            @*</form>*@
         </div>
 
         <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
                 <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
-                    <div class="top-text align-self-center">Top Text 1</div>
-                    <div class="bottom-text align-self-center">Bottom Text 1</div>
+                    <div class="top-text align-self-center">New Users</div>
+                    <div class="bottom-text align-self-center">@Model.NewUser</div>
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
                 <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
-                    <div class="top-text align-self-center">Top Text 2</div>
-                    <div class="bottom-text align-self-center">Bottom Text 2</div>
+                    <div class="top-text align-self-center">Total Users</div>
+                    <div class="bottom-text align-self-center">@Model.TotalUsers</div>
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
                 <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
-                    <div class="top-text align-self-center">Top Text 3</div>
-                    <div class="bottom-text align-self-center">Bottom Text 3</div>
-                </div>
-            </div>
-            
-            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
-                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
-                    <div class="top-text align-self-center">Top Text 4</div>
-                    <div class="bottom-text align-self-center">Bottom Text 4</div>
+                    <div class="top-text align-self-center">Avg. Session (Min)</div>
+                    <div class="bottom-text align-self-center">@Model.AvgSessionLength.ToString("000")</div>
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
                 <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
-                    <div class="top-text align-self-center">Top Text 5</div>
-                    <div class="bottom-text align-self-center">Bottom Text 5</div>
+                    <div class="top-text align-self-center">Total Sessions</div>
+                    <div class="bottom-text align-self-center">@Model.TotalSessions</div>
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
                 <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
-                    <div class="top-text align-self-center">Top Text 6</div>
-                    <div class="bottom-text align-self-center">Bottom Text 6</div>
+                    <div class="top-text align-self-center">Questions Answered</div>
+                    <div class="bottom-text align-self-center">@Model.QuestionsAnswered</div>
                 </div>
             </div>
 
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">New Questions</div>
+                    <div class="bottom-text align-self-center">@Model.NewQuestions</div>
+                </div>
+            </div>
         </div>
     </div>
-
+    <!--------------------------------------->
 
     <div class="row content-lower-half my-3">
         <div class="col-md-6 lower-half-content-left-side">
@@ -88,14 +91,14 @@
                    <div class="col-sm-6">
                    <div class="activeUsers, card">
                        <div class="card-body">
-                           <p class="my-1 text-center">Active Users: <span style="font-weight: bold; font-size: large">27</span>/80</p>
+                           <p class="my-1 text-center">Active Users: <span style="font-weight: bold; font-size: large"></span>@Model.ActiveUsers</p>
                        </div>
                    </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="card activeSessions">
                     <div class="card-body">
-                            <p class="my-1 text-center">Active Sessions: <span style="font-weight: bold; font-size: large">18</span></p>
+                            <p class="my-1 text-center">Active Sessions: <span style="font-weight: bold; font-size: large"></span>@Model.ActiveSessions</p>
                        </div>
                     </div>
                    </div>
@@ -106,7 +109,7 @@
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex justify-content-between pe-4">
                         <p class="fw-bold fs-5">Recent Sessions</p>
-                        <a asp-controller="Home" asp-action="Sessions" class="link-secondary">View All</a>
+                        <a asp-controller="Home" asp-action="Sessions">View All</a>
                     </div>
                     <div class="flex-fill d-flex">
                         <table class="table table-hover flex-fill mb-0">
@@ -118,31 +121,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var recentSession in Model.RecentSessions) 
+                                { 
                                 <tr>
-                                    <td scope="row">Fergy Thomas</td>
-                                    <td>05/29/2023 09:45 AM</td>
-                                    <td>10m 23s</td>
+                                    <td scope="row">
+                                       @recentSession.User.FirstName @recentSession.User.LastName
+                                     </td>
+                                     <td scope="row">
+                                        @recentSession.EndDate
+                                     </td>
+                                     <td scope="row">
+                                            @string.Format("{0:hh\\:mm\\:ss}",(recentSession.EndDate - recentSession.StartDate))
+                                     </td>
                                 </tr>
-                                <tr>
-                                    <td scope="row">Samantha Patel</td>
-                                    <td>05/29/2023 09:34 AM</td>
-                                    <td>15m 35s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Olivia Miller</td>
-                                    <td>05/29/2023 09:18 AM</td>
-                                    <td>19m 10s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Ethan Kim</td>
-                                    <td>05/29/2023 09:12 AM</td>
-                                    <td>23m 42s</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">Alexander Lee</td>
-                                    <td>05/29/2023 09:09 AM</td>
-                                    <td>9m 28s</td>
-                                </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -157,37 +149,32 @@
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex justify-content-between pe-4">
                         <p class="fw-bold fs-5">Top Questions</p>
-                        <a href="#" class="link-secondary">View All</a>
+                        <a asp-controller="Home" asp-action="Questions">View All</a>
                     </div>
                     <div class="flex-fill d-flex">
                         <table class="table table-hover flex-fill mb-0">
                             <thead>
                                 <tr>
                                     <th scope="col">Question</th>
+                                    <th scope="col">User Generated</th>
                                     <th scope="col">Sessions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td scope="row">"What sparked your interest in this position?"<br/><span class="badge rounded-pill bg-primary">Original</span></td>
-                                    <td>320</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">"What are your long-term career goals?"<br /><span class="badge rounded-pill bg-secondary">User-Generated</span></td>
-                                    <td>288</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">"What are you passionate about?"<br /><span class="badge rounded-pill bg-primary">Original</span></td>
-                                    <td>201</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">"How do you handle conflict or difficult conversations with coworkers or managers?"<br /><span class="badge rounded-pill bg-primary">Original</span></td>
-                                    <td>196</td>
-                                </tr>
-                                <tr>
-                                    <td scope="row">"What are your strengths and weaknesses?"<br /><span class="badge rounded-pill bg-secondary">User-Generated</span></td>
-                                    <td>153</td>
-                                </tr>
+                                @foreach (var topQuestions in Model.TopQuestions) 
+                                {
+                                    <tr>
+                                <td scope="row">
+                                        @topQuestions.QuestionContent
+                                </td>
+                                <td scope="row">
+                                        @topQuestions.UserGenerated
+                                </td>
+                                <td scope="row">
+                                        @topQuestions.Responses.Count
+                                </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
