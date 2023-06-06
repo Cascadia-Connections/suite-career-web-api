@@ -9,12 +9,12 @@ namespace SuiteCareers.Models
         public long QuestionId { get; set; }
         [Required]
         public string? QuestionContent { get; set; }
-        public long InterviewId { get; set; }
+        public long? InterviewId { get; set; }
         public Interview? Interview { get; set; }
         public bool? UserGenerated { get; set; }
         public DateTime? CreateDate { get; set; }
 
-        public ICollection<Response> Responses { get; set; }
+        public ICollection<Response>? Responses { get; set; }
 
     }
 }
