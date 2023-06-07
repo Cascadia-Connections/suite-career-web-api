@@ -28,9 +28,9 @@ public class HomeController : Controller
                                .Count(),
             TotalUsers = _db.Users.Count(),
             AvgSessionLength = _db.Sessions
-                                .Where(b => b.EndDate.HasValue)
+                                .Where(b => b.EndDate != null)
                                 .ToList()
-                                .Average(b => (b.EndDate.Value - b.StartDate).TotalMinutes),
+                                .Average(b => (b.EndDate - b.StartDate).TotalMinutes),
             TotalSessions = _db.Sessions
                                 .Count(),
             QuestionsAnswered = _db.Responses
