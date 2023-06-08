@@ -1,0 +1,89 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #fbfcfe;
+}
+
+
+.top-nav {
+    background-color: #E7F0F4;
+}
+
+.page-item.active .page-link, .btn-primary {
+    background-color: #006b5e;
+    border-color: #006b5e;
+}
+
+a, .page-link {
+    color: #006b5e;
+}
+
+.bg-primary {
+    background-color: #006b5e !important;
+}
+
+/* Index/Dashboad View */
+#recent-sessions {
+    height: 400px;
+}
+
+#top-questions {
+    height: 485px;
+}
+
+#top-questions td:nth-child(2) {
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 0.45rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.09);
+}
+
+@media (max-width: 576px) {
+    #active-info > div:nth-child(1) {
+        margin-bottom: 1rem
+    }
+}
+
+/* Sessions View */
+
+#searchInput {
+    height: 2.2rem;
+}
+
+.searchInput-container {
+    width: 35%;
+    padding-left: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .searchInput-container {
+        width: 100%;
+    }
+}
+}
+
+/* Users Page Styles */
+
+.user-date-filter {
+    margin-top: 10px;
+}

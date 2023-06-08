@@ -1,0 +1,152 @@
+﻿@model SuiteCareers.ViewModels.SessionsVM
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Sessions";
+    Layout = "_Layout";
+}
+
+<div style="height: 100%">
+    <div class="row my-3">
+        <div class="col-xl-12">
+            <div class="card overflow-auto mh-100">
+                <div class="card-body p-5 d-flex flex-column">
+
+                    <div class="row justify-content-between">
+                        <div class="flex-column">
+                            <h1 class="fw-bold fs-5 mb-2">All Sessions</h1>
+                        </div>
+                        <form id="sessionsForm" asp-action="Sessions">
+                            <div class="row mb-sm-2 align-items-center d-flex">
+                                <div class="d-flex py-1">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary me-1">Search</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary" onclick="resetAndSubmitForm()">Reset</button>
+                                    </div>
+                                    <div class="searchInput-container">
+                                        <input type="text" id="searchInput" name="term" class="form-control" style="height:initial;" value="@Model.Term" placeholder="Search by user or session ID" />
+                                    </div>
+                                </div>
+                                <div class="mx-lg-1">
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5 py-1">
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">From</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="from-date" name="start" value="@((Model.Start != null) ? Model.Start.Value.ToString("yyyy-MM-dd") : string.Empty)">
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 py-1">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">To</span>
+                                        </div>
+                                        <input type="date" class="form-control" id="to-date" name="end" value="@((Model.End != null) ? Model.End.Value.ToString("yyyy-MM-dd") : string.Empty)">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 py-1 d-sm-flex justify-content-end">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="row flex-fill d-flex">
+                        <table id="allSessions"class="table table-hover flex-fill mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.SessionIDSortParm&start=@Model.Start&end=@Model.End">Session ID</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.UserSortParm&start=@Model.Start&end=@Model.End">User</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.DateSortParm&start=@Model.Start&end=@Model.End">Date</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a href="/Home/Sessions?term=@Model.Term&orderBy=@Model.TimeSortParm&start=@Model.Start&end=@Model.End">Time</a>
+                                    </th>
+                                    <th scope="col">Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var session in Model.Sessions)
+                                {
+                                    <tr>                                        
+                                        <td scope="row">
+                                            @session.SessionId
+                                        </td>
+                                        <td scope="row">
+                                            @session.User.LastName, @session.User.FirstName
+                                        </td>
+                                        <td scope="row">
+                                            @session.StartDate.ToString("MMMM d yyyy")
+                                        </td>
+                                        <td scope="row">
+                                            @session.StartDate.ToString("h:mm tt")
+                                        </td>
+                                        <td scope="row">
+                                            @{
+                                                TimeSpan? duration = session.EndDate - session.StartDate;
+                                                string SessionDuration = string.Format("{0:%h} hrs, {0:%m} mins, {0:%s} secs", duration);
+                                                @SessionDuration
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center mt-3">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@(Model.CurrentPage-1)" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    if (i == Model.CurrentPage)
+                                    {
+                                        <li class="page-item active"><a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@i"> @i</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@i"> @i</a></li>
+                                    }
+                                }
+                                @if (Model.CurrentPage < Model.TotalPages)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="/Home/Sessions?term=@Model.Term&orderBy=@Model.OrderBy&start=@Model.Start&end=@Model.End&currentPage=@(Model.CurrentPage+1)" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function resetAndSubmitForm() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('from-date').value = '';
+            document.getElementById('to-date').value = '';
+            document.getElementById('sessionsForm').submit();
+        }
+    </script>
+}

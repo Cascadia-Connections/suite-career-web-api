@@ -1,0 +1,191 @@
+@model SuiteCareers.ViewModels.DashboardVM
+
+@addTagHelper *, Microsoft.AstNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+
+
+
+<div style="height: 100%">
+
+    <!-- Snapshot Bar -->  
+    <div id="snapshot-bar" class="card rounded p-3" style="background-color: #DFECF0;">
+        <div class="row mb-3">
+            <div class="col-auto">
+                <span>Filter by Date:</span>
+            </div>
+            @*<form method="get" asp-action="DashboardFilter" asp-controller="HomeController">*@
+            <div class="col-auto">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">From Date</span>
+                    </div>
+                <input type="date" class="form-control" id="from-date" name="from-date">                </div>
+            </div>
+            <div class="col-auto">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">To Date</span>
+                    </div>
+                    <input type="date" class="form-control" id="to-date" name="to-date">                </div>
+            </div>
+            <div class="col-auto">
+                <button id="filter" type="submit" class="btn btn-primary" action="DashboardFilter()">Filter</button>
+            </div>
+            @*</form>*@
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">New Users</div>
+                    <div class="bottom-text align-self-center">@Model.NewUser</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">Total Users</div>
+                    <div class="bottom-text align-self-center">@Model.TotalUsers</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">Avg. Session (Min)</div>
+                    <div class="bottom-text align-self-center">@Model.AvgSessionLength.ToString("000")</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">Total Sessions</div>
+                    <div class="bottom-text align-self-center">@Model.TotalSessions</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">Questions Answered</div>
+                    <div class="bottom-text align-self-center">@Model.QuestionsAnswered</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                <div class="card square bg-white rounded p-3 d-flex flex-column align-items-center">
+                    <div class="top-text align-self-center">New Questions</div>
+                    <div class="bottom-text align-self-center">@Model.NewQuestions</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--------------------------------------->
+
+    <div class="row content-lower-half my-3">
+        <div class="col-md-6 lower-half-content-left-side">
+
+                <!-- Active Info -->
+               <div id="active-info" class="row">
+                   <div class="col-sm-6">
+                   <div class="activeUsers, card">
+                       <div class="card-body">
+                           <p class="my-1 text-center">Active Users: <span style="font-weight: bold; font-size: large"></span>@Model.ActiveUsers</p>
+                       </div>
+                   </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card activeSessions">
+                    <div class="card-body">
+                            <p class="my-1 text-center">Active Sessions: <span style="font-weight: bold; font-size: large"></span>@Model.ActiveSessions</p>
+                       </div>
+                    </div>
+                   </div>
+               </div>
+
+            <!-- Recent Sessions -->
+            <div id="recent-sessions" class="card my-3 overflow-auto">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between pe-4">
+                        <p class="fw-bold fs-5">Recent Sessions</p>
+                        <a asp-controller="Home" asp-action="Sessions">View All</a>
+                    </div>
+                    <div class="flex-fill d-flex">
+                        <table class="table table-hover flex-fill mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Completed</th>
+                                    <th scope="col">Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var recentSession in Model.RecentSessions) 
+                                { 
+                                <tr>
+                                    <td scope="row">
+                                       @recentSession.User.FirstName @recentSession.User.LastName
+                                     </td>
+                                     <td scope="row">
+                                        @recentSession.EndDate
+                                     </td>
+                                     <td scope="row">
+                                            @string.Format("{0:hh\\:mm\\:ss}",(recentSession.EndDate - recentSession.StartDate))
+                                     </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                 </div>
+             </div>
+
+        </div>
+        <div class="col-md-6 lower-half-content-right-side">
+
+            <!-- Top Questions -->
+            <div class="card overflow-auto" id="top-questions">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between pe-4">
+                        <p class="fw-bold fs-5">Top Questions</p>
+                        <a asp-controller="Home" asp-action="Questions">View All</a>
+                    </div>
+                    <div class="flex-fill d-flex">
+                        <table class="table table-hover flex-fill mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Question</th>
+                                    <th scope="col">User Generated</th>
+                                    <th scope="col">Sessions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var topQuestions in Model.TopQuestions) 
+                                {
+                                    <tr>
+                                <td scope="row">
+                                        @topQuestions.QuestionContent
+                                </td>
+                                <td scope="row">
+                                        @topQuestions.UserGenerated
+                                </td>
+                                <td scope="row">
+                                        @topQuestions.Responses.Count
+                                </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    
+
+</div>
